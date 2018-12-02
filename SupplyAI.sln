@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SupplyAI", "SupplyAI\SupplyAI.csproj", "{84516101-AC9D-4BB9-8708-F2DE1F8B1107}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SupplyAI.Tests", "SupplyAI.Tests\SupplyAI.Tests.csproj", "{7C9A41C4-8F3E-431E-A74B-2F51F30A5B75}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{84516101-AC9D-4BB9-8708-F2DE1F8B1107}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84516101-AC9D-4BB9-8708-F2DE1F8B1107}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84516101-AC9D-4BB9-8708-F2DE1F8B1107}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84516101-AC9D-4BB9-8708-F2DE1F8B1107}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C9A41C4-8F3E-431E-A74B-2F51F30A5B75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C9A41C4-8F3E-431E-A74B-2F51F30A5B75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C9A41C4-8F3E-431E-A74B-2F51F30A5B75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C9A41C4-8F3E-431E-A74B-2F51F30A5B75}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E65DF55C-7725-4B65-9E95-954F8F6B51F0}
+	EndGlobalSection
+EndGlobal
