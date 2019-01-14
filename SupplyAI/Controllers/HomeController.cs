@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SupplyAI.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,7 +9,21 @@ namespace SupplyAI.Controllers
 {
     public class HomeController : Controller
     {
+
+
+        public HomeController() {
+
+        }
+
+
         public ActionResult Index() {
+            return View();
+        }
+
+
+
+        public ActionResult Info(int ID) {
+
             return View();
         }
 

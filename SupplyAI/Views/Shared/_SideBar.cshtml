@@ -1,0 +1,79 @@
+﻿@model SupplyAI.Models.TagDictionary
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<style>
+    .sidenav {
+        margin-top: 50px;
+        height: 100%;
+        width: 160px;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #414141;
+        overflow-x: scroll;
+        white-space:nowrap;
+        padding-top: 10px;
+        border-style: solid;
+        border-top-width:5px;
+        display:inline-block;
+    }
+    .sidenav span{
+        font-size:15px;
+        display:inline-block;
+      
+    }
+
+        .sidenav a {
+            padding: 0px 8px 0px 16px;
+            text-decoration: none; /*Because we dont want underlines on highlight*/
+            font-size: 15px;
+            color: #818181;
+            display: inline-block;
+            margin: 0px;
+        }
+
+    .sidenav a:hover {
+        color: #f1f1f1;
+    }
+    .body-content{
+        
+       
+        margin-left:160px;
+    }
+</style>
+
+<div class="sidenav" id="sidebar">
+    @{
+        
+        string name = "";
+        foreach (var item in Model) {
+
+            if (item.Parent == null) {
+                name = item.Name;
+                <p>@Html.ActionLink(item.Name,"Tag" , "Search", new { item.Name }, new { @class = "root-tag", @style = "font-weight:bold" })<span class="glyphicon glyphicon-triangle-right" aria-hidden="true" onclick="expand(this)"></span></p>
+            } else {
+                <p style="margin-left:15px;">@Html.ActionLink(item.Name, "Tag", "Search", new { item.Name }, new { @class = @name + "-tag" })</p>
+            }
+        }
+    }
+
+</div>
+
+<script>
+
+    function expand(clicked_element) {
+       
+        var name = clicked_element.previousSibling.innerText + "-tag";
+        var subtags = document.getElementsByClassName(name);
+
+        for (var k = 0; k < subtags.length; k++) {
+            if (subtags[k].style.display === "inline-block")
+                subtags[k].style.display = "none";
+            else
+                subtags[k].style.display = "inline-block";
+        }
+    }
+
+    
+
+</script>

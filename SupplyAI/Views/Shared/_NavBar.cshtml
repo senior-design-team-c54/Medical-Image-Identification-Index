@@ -1,0 +1,26 @@
+﻿<style>
+    .navbar{
+        border-bottom-width:1px;
+    }
+</style>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            @{
+                @Html.ActionLink(SupplyAI.Startup.AppName, "", "Search", null, new { @class = "navbar-brand", @style = "font-size:24px;" })
+            }
+        </div>
+        <div class="navbar-collapse collapse">
+
+            <ul class="nav navbar-nav">
+
+
+                <li style="margin:10px;width:240px;"><input class="input-sm" style="width:inherit;" placeholder="Search" /></li>
+                <li>@Html.ActionLink("About", "About", "Home")</li>
+                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+
+            </ul>
+        </div>
+    </div>
+</div>
