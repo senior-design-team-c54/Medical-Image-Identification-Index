@@ -12,15 +12,13 @@ namespace SupplyAI.Controllers
 
 
         public HomeController() {
-
         }
 
 
-        public ActionResult Index() {
+        public ActionResult IsMongoDBLive() {
+            ViewBag.isLive = Startup.database.defaultDB.isDatabaseAvailable();
             return View();
         }
-
-
 
         public ActionResult Info(int ID) {
 
