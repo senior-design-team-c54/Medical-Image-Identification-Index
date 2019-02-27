@@ -16,7 +16,7 @@ namespace SupplyAI.Controllers
 
 
         public ActionResult IsMongoDBLive() {
-            ViewBag.isLive = Startup.database.defaultDB.isDatabaseAvailable();
+            ViewBag.isLive = Startup.database.DefaultDB.isDatabaseAvailable();
             return View();
         }
 

@@ -12,7 +12,7 @@ namespace SupplyAI.Models
 
 
 
-        //the Add function needs to be defined for anonymous initializations. Formated as => new DataSetDictionary(){ {new UInt64(), new DataSet()  },...  }
+        //the Add function needs to be defined for anonymous initializations. Formated as => new DataSetDictionary(){ {new UInt64(), new Repository()  },...  }
         public void Add(Tag data) {
             if (_data.ContainsKey(data.Name))
                 throw new Exception("Fatal Error: Tag Name collision {" + data.Name + "}");

@@ -6,21 +6,21 @@ using System.Web;
 
 namespace SupplyAI.Models
 {
-    public class DataSetDictionary : IEnumerable<DataSet>
+    public class DataSetDictionary : IEnumerable<Repository>
     {
-        private Dictionary<ulong, DataSet> _data = new Dictionary<ulong, DataSet>();
+        private Dictionary<ulong, Repository> _data = new Dictionary<ulong, Repository>();
 
 
 
-        //the Add function needs to be defined for anonymous initializations. Formated as => new DataSetDictionary(){ {new UInt64(), new DataSet()  },...  }
-        public void Add(DataSet data) {
+        //the Add function needs to be defined for anonymous initializations. Formated as => new DataSetDictionary(){ {new UInt64(), new Repository()  },...  }
+        public void Add(Repository data) {
             if (_data.ContainsKey(data.ID))
                 throw new Exception("Fatal Error: ID collision {" + data.ID + "}");
             _data[data.ID] = data;
         }
 
         //Allows the DataSetDictionary to be used like a dictionary 
-        public DataSet this[ulong element] {
+        public Repository this[ulong element] {
             get {
                 if (_data.ContainsKey(element))
                     return _data[element];
@@ -33,13 +33,13 @@ namespace SupplyAI.Models
         }
        
 
-        public static explicit operator DataSetDictionary(Dictionary<ulong,DataSet> data) {
+        public static explicit operator DataSetDictionary(Dictionary<ulong,Repository> data) {
             DataSetDictionary dsd = new DataSetDictionary();
             dsd._data = data;
             return dsd;
         }
 
-        public IEnumerator<DataSet> GetEnumerator() {
+        public IEnumerator<Repository> GetEnumerator() {
             return _data.Values.GetEnumerator();
         }
 

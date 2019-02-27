@@ -1,0 +1,108 @@
+﻿@{
+    //optional to specify this
+    //width: 100%;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .container {
+        width: 100%;
+    }
+
+    .nopadding {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .fullrow {
+        height: auto;
+        width: 100%;
+        display: flex;
+        
+        border-radius: 4px;
+        overflow:hidden;
+    }
+
+    .collection {
+        margin: 8px;
+        border-width: 1px;
+        border-style: solid;
+        border-radius: 4px;
+        padding: 8px;
+        background-color: #FFF;
+        border-color: #DDD;
+        
+    }
+
+    .collectionX:hover {
+        border-color: #DDD;
+    }
+
+    .ml-0 {
+        margin-left: 0px;
+    }
+
+    .name_part {
+        margin-right: 15px;
+        width:120px;
+        min-width:120px;
+        height:20px;
+    }
+</style>
+@model SupplyAI.Models.Repository
+
+
+
+<div class="container nopadding">
+    <div class="row" style="display:flex">
+        <div class="col-sm-3 collection">Side stuff</div>
+        <div class="col-sm-7 collection">
+            <h1 class="row ml-0">
+                Title of Repository
+            </h1>
+            <div class="col-sm-3 container">
+                @{
+                    int i =0;
+                    string style="";
+                    foreach (var prop in typeof(SupplyAI.Models.Repository).GetProperties()) {
+                        if (i++ % 2 == 0) { style = "background-color:#F8F8F8"; } else { style = ""; }
+                        <div class="row fullrow" style=@style>
+                            <b id="abstract_name" class="col-sm name_part">
+                                @prop.Name.Replace('_',' '):
+                            </b>
+                            <div id="abstract_desc" class="col-sm" style="text-wrap:normal;overflow-wrap:break-word;overflow:hidden;box-sizing:content-box;">
+                                @{ var obj = prop.GetValue(Model);
+                                    string output;
+                                    if (obj == null) { output = "[EMPTY]"; } else { output = obj.ToString(); }
+                                }
+                                @output
+                            </div>
+                        </div>
+                    }
+
+                }
+
+                @*<div class="row fullrow">
+                    <b id="abstract_name" class="col-sm-2 name_part">
+                        Abstract:
+                    </b>
+                    <div id="abstract_desc" class="col-sm-10">
+                        The Abstract of this paper is something so scary that merely reading it would cause lesser men to go insane.  Even those who keep their sanity after viewing ...
+                    </div>
+                </div>
+                <div class="row fullrow">
+                    <b id="" class="col-sm name_part">
+                        Name:
+                    </b>
+                    <div id="" class="col-sm">
+                        Cancer Test
+                    </div>
+                </div>*@
+
+            </div>
+
+
+        </div>
+        <div class="col-sm-3 collection">More Side Stuff</div>
+    </div>
+</div>

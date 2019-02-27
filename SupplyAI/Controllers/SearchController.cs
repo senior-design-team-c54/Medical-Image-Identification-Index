@@ -22,8 +22,6 @@ namespace SupplyAI.Controllers
         {
             //must calculate total number of results
             SearchResults = Database;
-
-
             ViewBag.Title =  SearchResults.Count() +" Search Results";
 
 
@@ -36,7 +34,7 @@ namespace SupplyAI.Controllers
         {
             var results= Database.Where(x => x.Tags.ContainsKey(name)); //find each database entry with a tag with key name
             //the .ToDictionary method loops through each Value in results, and uses the input function to generate the key
-            //in other words, for each DataSet value 'a', the key is a.id
+            //in other words, for each Repository value 'a', the key is a.id
             SearchResults = (DataSetDictionary) results.ToDictionary(a => a.ID); 
             return View("Index",this); //we need to specify 'Index', because otherwise it will look for the 'Tag' View
         }
@@ -54,7 +52,7 @@ namespace SupplyAI.Controllers
             return View("Index",this);
         }
 
-        // POST: DataSet/Create
+        // POST: Repository/Create
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {

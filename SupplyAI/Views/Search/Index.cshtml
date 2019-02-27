@@ -13,88 +13,91 @@
         background-color: #FFF;
         border-color: #FFF;
     }
+
         .collection:hover {
             border-color: #DDD;
         }
 
-    .summary{
-        width:100%;
-        float:right;
-        
+    .summary {
+        width: 100%;
+        float: right;
     }
-    .title{
-        font-size:200%;
-        font-family:Arial;
-        text-decoration:none;
-        color:#268fdd;
+
+    .title {
+        font-size: 200%;
+        font-family: Arial;
+        text-decoration: none;
+        color: #268fdd;
     }
-    .title:hover{
-        color:#125a8f;
-        text-decoration:none;
+
+        .title:hover {
+            color: #125a8f;
+            text-decoration: none;
+        }
+
+    .tag {
+        border-color: #3b3b3b;
+        border-width: 1px;
+        border-style: solid;
+        border-radius: 4px;
+        background-color: #daf1ff;
+        color: #3b3b3b;
+        font-weight: bold;
+        margin: 3px;
+        padding: 3px;
     }
-    .tag{
-        border-color:#3b3b3b;
-        border-width:1px;
-        border-style:solid;
-        border-radius:4px;
-        background-color:#daf1ff;
-        color:#3b3b3b;
-        font-weight:bold;
-        margin:3px;
-        padding:3px;
-    }
-    .tag:hover{
-        text-decoration:none;
-        background-color:#aee1ff;
-        color:#1b1b1b;
-    }
-    
-    
+
+        .tag:hover {
+            text-decoration: none;
+            background-color: #aee1ff;
+            color: #1b1b1b;
+        }
 </style>
 
 
 @model SupplyAI.Controllers.SearchController
 
+@Html.Partial("_SideBar", SupplyAI.Startup.Tags);
 
-@{ 
+@{
     string alternate = "";
     foreach (var data in Model.SearchResults) {
         if (alternate == "even") { alternate = "odd"; } else { alternate = "even"; }
-<div class="collection row container">
-    <!--
-    <div class="col-xs-1" style="width:15px">
-    </div>
-    -->
-    <div class="col-lg-11">
-        <div class="row">
-            @Html.ActionLink(data.Name, "" + data.ID, "Collection", new { area = "" }, new { @class = "title" })
-        </div>
-        <div class="row">
-            Authors:
-            @{
+        <div class="collection row container">
+            <!--
+            <div class="col-xs-1" style="width:15px">
+            </div>
+            -->
+            <div class="col-lg-11">
+                <div class="row">
+                    @Html.ActionLink(data.Name, "View", "Repository", new { id = data.ID }, new { @class = "title" })
+                </div>
+                <div class="row">
+                    Authors:
+                    @{
 
-                int last = data.Authors.Count;
-                string extra = ", ";
-                for (int i = 0; i < data.Authors.Count; i++) {
-                    if (i == data.Authors.Count - 1) { extra = ""; }
-                    <span style="color:#125a8f">@Html.ActionLink(@data.Authors[i], "Author", "Search", new { name = data.Authors[i] }, new { })</span><text>@extra</text>
-                }
-            }
-        </div>
-        <div class="row">
-            @data.Summary
-        </div>
-        <div class="row" style="padding-top:5px;">
-            @{
-                foreach (var t in data.Tags) {
-                    @Html.ActionLink(t.Key, "Tag", new { name = t.Key }, new { @class = "tag col-m-1" })
+                        int last = data.Authors.Count;
+                        string extra = ", ";
+                        for (int i = 0; i < data.Authors.Count; i++) {
+                            if (i == data.Authors.Count - 1) { extra = ""; }
+                            <span style="color:#125a8f">@Html.ActionLink(@data.Authors[i], "Author", "Search", new { name = data.Authors[i] }, new { })</span><text>@extra</text>
+                        }
+                    }
+                </div>
+                <div class="row">
+                    @data.Summary
+                </div>
+                <div class="row" style="padding-top:5px;">
+                    @{
+                        foreach (var t in data.Tags) {
+                            @Html.ActionLink(t.Key, "Tag", new { name = t.Key }, new { @class = "tag col-m-1" })
 
-                }
-            }
+                        }
+                    }
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-       
+
     }
 
 }

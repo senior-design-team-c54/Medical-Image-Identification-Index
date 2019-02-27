@@ -5,8 +5,7 @@ using System.Web;
 
 using MongoDB.Bson;
 using MongoDB.Driver;
-
-
+using SupplyAI.Models;
 
 namespace SupplyAI
 {
@@ -15,8 +14,9 @@ namespace SupplyAI
         //public const string AppName = "SupplyAI";
         private static readonly string connectionString = "mongodb://localhost:27017";
         public static readonly string DefaultDatabase = "SupplyAI";
-        public MongoClient client { get; private set; } 
-        public MongoDatabaseBase defaultDB { get { return (MongoDatabaseBase)client.GetDatabase(DefaultDatabase); } }
+        public MongoClient client { get; private set; }
+        public MongoDatabaseBase DefaultDB { get { return (MongoDatabaseBase)client.GetDatabase(DefaultDatabase); } }
+        public IMongoCollection<Repository> DataCollection { get { return DefaultDB.GetCollection<Repository>("DataSet"); } }
 
 
         public Database() {
