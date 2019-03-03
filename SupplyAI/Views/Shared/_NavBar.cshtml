@@ -1,10 +1,15 @@
 ﻿<style>
     .navbar{
         border-bottom-width:1px;
+        flex-direction:row;
+    }
+
+    .nav{
+        flex-direction:row;
     }
 </style>
 
-<div class="navbar navbar-inverse navbar-fixed-top">
+<div class="navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
             @{
@@ -14,7 +19,6 @@
         <div class="navbar-collapse collapse">
 
             <ul class="nav navbar-nav">
-
 
                 <li style="margin:10px;width:240px;"><input class="input-sm" style="width:inherit;" placeholder="Search" /></li>
                 <li>@Html.ActionLink("About", "About", "Home")</li>
