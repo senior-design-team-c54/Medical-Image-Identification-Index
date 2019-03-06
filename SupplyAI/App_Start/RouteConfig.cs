@@ -11,8 +11,9 @@ namespace SupplyAI
     {
         public static void RegisterRoutes(RouteCollection routes) {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
-            Startup.Init(); //inializes starup variables (like the database)
+            var db = new Database();
+            System.Diagnostics.Debug.WriteLine(db.client.isDatabaseAvailable());
+            Startup.Init(); //inializes startup variables (like the database)
 
             routes.MapRoute(
                 name: "Default",

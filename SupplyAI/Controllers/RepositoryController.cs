@@ -17,7 +17,7 @@ namespace SupplyAI.Controllers
         [Route("View/{id}")]
         public ActionResult View(ulong id)
         {
-            var collection = Startup.database.DataCollection;
+            var collection = Startup.Database.DataCollection;
             var doc = collection.Find(x => x.ID == id).FirstOrDefault();
             if(doc == default(Repository)) {
                 return RedirectToAction("Index", "Search");

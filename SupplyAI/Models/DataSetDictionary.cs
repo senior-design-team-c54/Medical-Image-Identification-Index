@@ -6,7 +6,7 @@ using System.Web;
 
 namespace SupplyAI.Models
 {
-    public class DataSetDictionary : IEnumerable<Repository>
+    public class RepositoryDictionary : IEnumerable<Repository>
     {
         private Dictionary<ulong, Repository> _data = new Dictionary<ulong, Repository>();
 
@@ -33,8 +33,8 @@ namespace SupplyAI.Models
         }
        
 
-        public static explicit operator DataSetDictionary(Dictionary<ulong,Repository> data) {
-            DataSetDictionary dsd = new DataSetDictionary();
+        public static explicit operator RepositoryDictionary(Dictionary<ulong,Repository> data) {
+            RepositoryDictionary dsd = new RepositoryDictionary();
             dsd._data = data;
             return dsd;
         }

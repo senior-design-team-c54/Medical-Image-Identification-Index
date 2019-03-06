@@ -16,9 +16,8 @@ namespace SupplyAI.Tests.Controllers
         public void Index() {
             // Arrange
             HomeController controller = new HomeController();
-
             // Act
-            ViewResult result = controller.Index() as ViewResult;
+            ViewResult result = controller.About() as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);
@@ -45,6 +44,13 @@ namespace SupplyAI.Tests.Controllers
             ViewResult result = controller.Contact() as ViewResult;
 
             // Assert
+            Assert.IsNotNull(result);
+        }
+        [TestMethod]
+        public void IsMongoDBLive() {
+            HomeController controller = new HomeController();
+            ViewResult result = controller.IsMongoDBLive() as ViewResult;
+
             Assert.IsNotNull(result);
         }
     }

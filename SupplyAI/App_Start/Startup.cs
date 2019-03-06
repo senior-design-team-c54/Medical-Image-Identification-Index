@@ -12,62 +12,98 @@ namespace SupplyAI
     public class Startup {
         public const string AppName = "SupplyAI";
 
-        public static Database database { get; } = new Database();
-        public static MongoClient client { get { return database.client; } }
+        public static Database Database { get; private set; } //= new Database();
+        public static MongoClient client { get { return Database.client; } }
         
 
 
-        public static readonly DataSetDictionary Database = new DataSetDictionary();
+       // public static readonly RepositoryDictionary Database = new RepositoryDictionary();
         public static readonly TagDictionary Tags = new TagDictionary();
 
         public static void Init() {
+            //database = new Database();
             initTags(); //must be first
-            initDatabase();
+            //initMongo();
         }
-        private static void initDatabase(){
-            
+        private static void initMongo() {
+            var cols = Database.DefaultDB.ListCollectionNames();
+       
+            if (cols.ToList().Contains("Repository"))
+                return;
 
-            var ds = new Repository( "Heart Arrhythmia");
-            ds.Summary = "This dataset contains studies of MRI scans of hearts from various adult male patients with hearth Arryhthmia.";
-            ds.Authors.AddRange(new List<string>{ "Joe Smith", "Frank Zappa","Charlie Brown"});
-            ds.addTags("heart", "disease");
-            Database.Add(ds);
-            ds = new Repository("Lung Cross-Section" );
-            ds.Summary = "Contains anonymized patient x-rays of lungs with no abnormal conditions. Because the data was anonymized there was no information on patient age, gender or height.";
-            ds.Authors.AddRange(new List<string> { "Frank Zappa", "Peter Peters" });
-            ds.addTags("lungs","normal");
-            Database.Add(ds);
-            ds = new Repository("Motor Cortex Neural Activity");
-            ds.Authors.AddRange(new List<string> { "Joe Smith", "Peter Peters" });
-            ds.addTags("brain","normal");      
-            Database.Add(ds);
+            System.Diagnostics.Debug.WriteLine("Initializing Mongo Database. This should only occur once\n\n");
 
-            ds = new Repository("Bone density scans in elderly patients ");
-            ds.Authors.AddRange(new List<string> { "Steven Franks" });
-            ds.addTags("age","disease","bones");
-            Database.Add(ds);
-
-            //copied and pasted
-            ds = new Repository( "Heart Arrhythmia" );
+            var ds = new Repository("Heart Arrhythmia");
             ds.Summary = "This dataset contains studies of MRI scans of hearts from various adult male patients with hearth Arryhthmia.";
             ds.Authors.AddRange(new List<string> { "Joe Smith", "Frank Zappa", "Charlie Brown" });
             ds.addTags("heart", "disease");
-            Database.Add(ds);
-            ds = new Repository( "Lung Cross-Section" );
+            Database.AddRepository(ds);
+
+            ds = new Repository("Lung Cross-Section");
             ds.Summary = "Contains anonymized patient x-rays of lungs with no abnormal conditions. Because the data was anonymized there was no information on patient age, gender or height.";
             ds.Authors.AddRange(new List<string> { "Frank Zappa", "Peter Peters" });
             ds.addTags("lungs", "normal");
-            Database.Add(ds);
-            ds = new Repository("Motor Cortex Neural Activity" );
+            Database.AddRepository(ds);
+
+            ds = new Repository("Motor Cortex Neural Activity");
             ds.Authors.AddRange(new List<string> { "Joe Smith", "Peter Peters" });
             ds.addTags("brain", "normal");
-            Database.Add(ds);
+            Database.AddRepository(ds);
+
             ds = new Repository("Bone density scans in elderly patients ");
             ds.Authors.AddRange(new List<string> { "Steven Franks" });
             ds.addTags("age", "disease", "bones");
-            Database.Add(ds);
+            Database.AddRepository(ds);
+
 
         }
+
+
+
+        //private static void initDatabase(){
+            
+
+        //    var ds = new Repository( "Heart Arrhythmia");
+        //    ds.Summary = "This dataset contains studies of MRI scans of hearts from various adult male patients with hearth Arryhthmia.";
+        //    ds.Authors.AddRange(new List<string>{ "Joe Smith", "Frank Zappa","Charlie Brown"});
+        //    ds.addTags("heart", "disease");
+        //    Database.Add(ds);
+        //    ds = new Repository("Lung Cross-Section" );
+        //    ds.Summary = "Contains anonymized patient x-rays of lungs with no abnormal conditions. Because the data was anonymized there was no information on patient age, gender or height.";
+        //    ds.Authors.AddRange(new List<string> { "Frank Zappa", "Peter Peters" });
+        //    ds.addTags("lungs","normal");
+        //    Database.Add(ds);
+        //    ds = new Repository("Motor Cortex Neural Activity");
+        //    ds.Authors.AddRange(new List<string> { "Joe Smith", "Peter Peters" });
+        //    ds.addTags("brain","normal");      
+        //    Database.Add(ds);
+
+        //    ds = new Repository("Bone density scans in elderly patients ");
+        //    ds.Authors.AddRange(new List<string> { "Steven Franks" });
+        //    ds.addTags("age","disease","bones");
+        //    Database.Add(ds);
+
+        //    //copied and pasted
+        //    ds = new Repository( "Heart Arrhythmia" );
+        //    ds.Summary = "This dataset contains studies of MRI scans of hearts from various adult male patients with hearth Arryhthmia.";
+        //    ds.Authors.AddRange(new List<string> { "Joe Smith", "Frank Zappa", "Charlie Brown" });
+        //    ds.addTags("heart", "disease");
+        //    Database.Add(ds);
+        //    ds = new Repository( "Lung Cross-Section" );
+        //    ds.Summary = "Contains anonymized patient x-rays of lungs with no abnormal conditions. Because the data was anonymized there was no information on patient age, gender or height.";
+        //    ds.Authors.AddRange(new List<string> { "Frank Zappa", "Peter Peters" });
+        //    ds.addTags("lungs", "normal");
+        //    Database.Add(ds);
+        //    ds = new Repository("Motor Cortex Neural Activity" );
+        //    ds.Authors.AddRange(new List<string> { "Joe Smith", "Peter Peters" });
+        //    ds.addTags("brain", "normal");
+        //    Database.Add(ds);
+        //    ds = new Repository("Bone density scans in elderly patients ");
+        //    ds.Authors.AddRange(new List<string> { "Steven Franks" });
+        //    ds.addTags("age", "disease", "bones");
+        //    Database.Add(ds);
+
+        //}
 
 
         private static void initTags() {
