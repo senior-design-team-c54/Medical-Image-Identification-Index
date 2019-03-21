@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
 
 namespace SupplyAI.Controllers
 {
@@ -16,7 +17,7 @@ namespace SupplyAI.Controllers
 
 
         public ActionResult IsMongoDBLive() {
-            ViewBag.isLive = Startup.Database.client.isDatabaseAvailable();
+            ViewBag.isLive = System.IO.File.Exists(Server.MapPath( "~/bin/App_Data/login.pass")); 
             return View();
         }
 

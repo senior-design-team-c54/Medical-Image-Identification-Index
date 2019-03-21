@@ -12,7 +12,7 @@ namespace SupplyAI
     public class Startup {
         public const string AppName = "SupplyAI";
 
-        public static Database Database { get; private set; } //= new Database();
+        public static Database Database { get; private set; }
         public static MongoClient client { get { return Database.client; } }
         
 
@@ -21,7 +21,7 @@ namespace SupplyAI
         public static readonly TagDictionary Tags = new TagDictionary();
 
         public static void Init() {
-            //database = new Database();
+            Database = new Database();
             initTags(); //must be first
             //initMongo();
         }

@@ -46,12 +46,6 @@ namespace SupplyAI.Tests.Controllers
             // Assert
             Assert.IsNotNull(result);
         }
-        [TestMethod]
-        public void IsMongoDBLive() {
-            HomeController controller = new HomeController();
-            ViewResult result = controller.IsMongoDBLive() as ViewResult;
-
-            Assert.IsNotNull(result);
-        }
+        
     }
 }

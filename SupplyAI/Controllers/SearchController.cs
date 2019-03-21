@@ -21,7 +21,7 @@ namespace SupplyAI.Controllers
         public ActionResult Index()
         {
             //must calculate total number of results
-            SearchResults = new List<Repository>();// Database.FindRepo(r => true);
+            SearchResults =  Database.FindRepo(r => true);
             ViewBag.Title =  SearchResults.Count +" Search Results";
 
 

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Web;
-
+using System.Web.Hosting;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using SupplyAI.Models;
@@ -28,6 +28,7 @@ namespace SupplyAI
 
         public Database() {
             var path = getConnectionString();
+           
             client = new MongoClient(path);
         }
         
@@ -59,18 +60,8 @@ namespace SupplyAI
         /// </summary>
         /// <returns>returns string[2] ={ username, password }</returns>
         private static string[] loadUserConfig() {
-            string filePath = "";
-            if (File.Exists(LOGINPATH + LOGINFILE)) {
-                filePath = LOGINPATH;
-            } else {
-                try {
-                    filePath = HttpContext.Current.Server.MapPath("~/" + LOGINPATH);
-                } catch (Exception e) {
-                    //could not load through server,  might be test, load locally instead
-                    Console.WriteLine(e);
-                    ;
-                }
-            }
+            string filePath = HostingEnvironment.MapPath("~/bin/App_Data/");
+
 
             
             string[] config = File.ReadAllLines(filePath + LOGINFILE);
@@ -92,6 +83,7 @@ namespace SupplyAI
         public static string getConnectionString() {
             string path = AppDomain.CurrentDomain.BaseDirectory;
             string[] config = loadUserConfig();
+            if (config == null) throw new Exception("Cannot load database login file");
             return String.Format(CONNECTIONSTRING, config[0], config[1]);
         }
        
