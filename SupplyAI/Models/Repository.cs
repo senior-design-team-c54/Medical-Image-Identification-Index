@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace SupplyAI.Models
+namespace MI3.Models
 {
     
     public class Repository

@@ -1,4 +1,4 @@
-﻿using SupplyAI.Models;
+﻿using MI3.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +7,10 @@ using System.Web;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace SupplyAI
+namespace MI3
 {
     public class Startup {
-        public const string AppName = "SupplyAI";
+        public const string AppName = "MI3";
 
         public static Database Database { get; private set; }
         public static MongoClient client { get { return Database.client; } }
@@ -126,7 +126,7 @@ namespace SupplyAI
         }
         //a shortcut method for adding Tags (at=> add tag)
         private static void at(string name) {
-            SupplyAI.Models.Tag parent = null;
+            MI3.Models.Tag parent = null;
             name = name.ToLower(); //only lowercase letters for Tags
             if (name.Contains(':')) { 
                 string parentName = name.Substring(0, name.IndexOf(':'));
@@ -136,7 +136,7 @@ namespace SupplyAI
                     throw new Exception("Parent Tag Named {"+parentName+"} does not exist."); //replace this with a browser side warning when trying to add a tag that doesn't work
             }
 
-            Tags.Add(new SupplyAI.Models.Tag(name,parent));
+            Tags.Add(new MI3.Models.Tag(name,parent));
         }
     }
 }

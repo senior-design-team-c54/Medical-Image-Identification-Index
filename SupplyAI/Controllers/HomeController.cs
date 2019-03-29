@@ -1,4 +1,4 @@
-﻿using SupplyAI.Models;
+﻿using MI3.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.IO;
 
-namespace SupplyAI.Controllers
+namespace MI3.Controllers
 {
     public class HomeController : Controller
     {

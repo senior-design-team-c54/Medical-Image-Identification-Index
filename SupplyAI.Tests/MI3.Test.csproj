@@ -114,9 +114,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SupplyAI\SupplyAI.csproj">
+    <ProjectReference Include="..\SupplyAI\MI3.csproj">
       <Project>{84516101-AC9D-4BB9-8708-F2DE1F8B1107}</Project>
-      <Name>SupplyAI</Name>
+      <Name>MI3</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

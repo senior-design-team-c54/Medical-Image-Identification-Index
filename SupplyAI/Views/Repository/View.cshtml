@@ -49,7 +49,7 @@
         height:20px;
     }
 </style>
-@model SupplyAI.Models.Repository
+@model MI3.Models.Repository
 
 
 
@@ -64,7 +64,7 @@
                 @{
                     int i =0;
                     string style="";
-                    foreach (var prop in typeof(SupplyAI.Models.Repository).GetProperties()) {
+                    foreach (var prop in typeof(MI3.Models.Repository).GetProperties()) {
                         if (i++ % 2 == 0) { style = "background-color:#F8F8F8"; } else { style = ""; }
                         <div class="row fullrow" style=@style>
                             <b id="abstract_name" class="col-sm name_part">

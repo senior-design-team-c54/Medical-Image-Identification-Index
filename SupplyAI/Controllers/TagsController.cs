@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace SupplyAI.Controllers
+namespace MI3.Controllers
 {
     public class TagsController : Controller
     {

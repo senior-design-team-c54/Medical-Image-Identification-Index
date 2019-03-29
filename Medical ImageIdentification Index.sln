@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SupplyAI", "SupplyAI\SupplyAI.csproj", "{84516101-AC9D-4BB9-8708-F2DE1F8B1107}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MI3", "SupplyAI\MI3.csproj", "{84516101-AC9D-4BB9-8708-F2DE1F8B1107}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SupplyAI.Tests", "SupplyAI.Tests\SupplyAI.Tests.csproj", "{7C9A41C4-8F3E-431E-A74B-2F51F30A5B75}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MI3.Test", "SupplyAI.Tests\MI3.Test.csproj", "{7C9A41C4-8F3E-431E-A74B-2F51F30A5B75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

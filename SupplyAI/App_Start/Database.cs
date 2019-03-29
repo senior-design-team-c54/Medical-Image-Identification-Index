@@ -8,19 +8,19 @@ using System.Web;
 using System.Web.Hosting;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using SupplyAI.Models;
+using MI3.Models;
 
-namespace SupplyAI
+namespace MI3
 {
     //Class used for accessing MongoDB database w/ methods ofr easy & convenienct loading/storing
     public class Database
     {
-        //public const string AppName = "SupplyAI";
+        //public const string AppName = "MI3";
         private static readonly string LOGINPATH = @"App_Data/";
         private static readonly string LOGINFILE = "login.pass";
         private static readonly string CONNECTIONSTRING = @"mongodb+srv://{0}:{1}@c54-lnh7c.mongodb.net/test?retryWrites=true";
         private static readonly string localconnect = "mongodb://localhost:27017";
-        public static readonly string DefaultDatabase = "SupplyAI";
+        public static readonly string DefaultDatabase = "MI3";
         public MongoClient client { get; private set; }
         public MongoDatabaseBase DefaultDB { get { return (MongoDatabaseBase)client.GetDatabase(DefaultDatabase); } }
         public IMongoCollection<Repository> DataCollection { get { return DefaultDB.GetCollection<Repository>("Repository"); } }

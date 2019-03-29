@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.IO;
 
-namespace SupplyAI.Models
+namespace MI3.Models
 {
     public class Series
     {

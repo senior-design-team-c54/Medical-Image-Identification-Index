@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SupplyAI;
-using SupplyAI.Controllers;
+using MI3;
+using MI3.Controllers;
 
 namespace SupplyAI.Tests.Controllers
 {

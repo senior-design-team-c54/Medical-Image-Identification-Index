@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 
-namespace SupplyAI.Models
+namespace MI3.Models
 {
     public class Study
     {

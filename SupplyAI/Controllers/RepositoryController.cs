@@ -1,4 +1,4 @@
-﻿using SupplyAI.Models;
+﻿using MI3.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Core;
 
-namespace SupplyAI.Controllers
+namespace MI3.Controllers
 {
     [RoutePrefix("Repository")]
     public class RepositoryController : Controller

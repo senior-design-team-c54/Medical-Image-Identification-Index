@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace SupplyAI
+namespace MI3
 {
     public class BundleConfig
     {
