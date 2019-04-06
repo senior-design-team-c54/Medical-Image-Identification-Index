@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MI3", "SupplyAI\MI3.csproj"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MI3.Test", "SupplyAI.Tests\MI3.Test.csproj", "{7C9A41C4-8F3E-431E-A74B-2F51F30A5B75}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApplication", "..\TestApplication\TestApplication\TestApplication.csproj", "{834DC852-6861-46EB-B2D3-34F336153D4C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{7C9A41C4-8F3E-431E-A74B-2F51F30A5B75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C9A41C4-8F3E-431E-A74B-2F51F30A5B75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C9A41C4-8F3E-431E-A74B-2F51F30A5B75}.Release|Any CPU.Build.0 = Release|Any CPU
-		{834DC852-6861-46EB-B2D3-34F336153D4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{834DC852-6861-46EB-B2D3-34F336153D4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{834DC852-6861-46EB-B2D3-34F336153D4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{834DC852-6861-46EB-B2D3-34F336153D4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
