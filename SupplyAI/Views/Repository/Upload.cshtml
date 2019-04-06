@@ -4,4 +4,21 @@
 
 
 
+@if (Request.IsAuthenticated)
+{
+    <p>
+        <h1><em>Instructions for upload file format</em></h1>
+    </p>
+}
+else
+{
+    <p>
+        Please @Html.ActionLink("sign in", "Login", "Account") or @Html.ActionLink("register", "Register", "Account") to upload your data.
+    </p>
+}
+
+
+
+
+
 

@@ -28,5 +28,11 @@ namespace MI3.Controllers
 
             return View();
         }
+
+        [HttpGet]
+        public ActionResult Upload()
+        {
+            return View();
+        }
     }
 }

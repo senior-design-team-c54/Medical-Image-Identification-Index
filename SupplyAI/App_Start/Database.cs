@@ -9,10 +9,11 @@ using System.Web.Hosting;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MI3.Models;
+using System.Configuration;
 
 namespace MI3
 {
-    //Class used for accessing MongoDB database w/ methods ofr easy & convenienct loading/storing
+    //Class used for accessing MongoDB database w/ methods for easy & convenienct loading/storing
     public class Database
     {
         //public const string AppName = "MI3";
@@ -25,11 +26,10 @@ namespace MI3
         public MongoDatabaseBase DefaultDB { get { return (MongoDatabaseBase)client.GetDatabase(DefaultDatabase); } }
         public IMongoCollection<Repository> DataCollection { get { return DefaultDB.GetCollection<Repository>("Repository"); } }
 
-
         public Database() {
-            var path = getConnectionString();
+            //var path = getConnectio nString();
            
-            client = new MongoClient(path);
+            client = new MongoClient(ConfigurationManager.ConnectionStrings["Mongo"].ConnectionString);
         }
         
 

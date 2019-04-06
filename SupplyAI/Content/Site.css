@@ -22,12 +22,3 @@ select,
 textarea {
     max-width: 280px;
 }
-#menu {
-    margin: 0 auto;
-    float: right;
-    position: relative;
-
-       list-style:none;
-    margin:auto;
-    background-color: #f00;
-}

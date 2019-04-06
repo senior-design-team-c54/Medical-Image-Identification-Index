@@ -1,4 +1,5 @@
-﻿<style>
+﻿@*
+<style>
     .navbar{
         border-bottom-width:1px;
         flex-direction:row;
@@ -8,25 +9,26 @@
         flex-direction:row;
     }
 </style>
+*@
 
-<div class="navbar-inverse navbar-fixed-top">
+<div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            @{
-                @Html.ActionLink(MI3.Startup.AppName, "", "Search", null, new { @class = "navbar-brand", @style = "font-size:24px;" })
-            }
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink(MI3.Startup.AppName, "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
         </div>
         <div class="navbar-collapse collapse">
-
             <ul class="nav navbar-nav">
-
-                <li style="margin:10px;width:240px;"><input class="input-sm" style="width:inherit;" placeholder="Search" /></li>
+                @*<li style="margin:10px;width:240px;"><input class="input-sm" style="width:inherit;" placeholder="Search" /></li>*@
                 <li>@Html.ActionLink("About", "About", "Home")</li>
                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                <li>@Html.ActionLink("Is Database Live?", "IsMongoDBLive", "Home")</li>
-
-
+                @*<li>@Html.ActionLink("Is Database Live?", "IsMongoDBLive", "Home")</li>*@
             </ul>
+            @Html.Partial("_LoginPartial")
         </div>
     </div>
 </div>

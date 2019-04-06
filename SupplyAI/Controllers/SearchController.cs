@@ -67,6 +67,13 @@ namespace MI3.Controllers
             }
         }
 
+        // GET: Repository/Upload
+        [HttpGet]
+        public ActionResult Upload()
+        {
+            return View();
+        }
+
         
     }
 }

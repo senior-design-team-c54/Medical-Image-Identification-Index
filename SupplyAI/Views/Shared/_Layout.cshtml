@@ -1,8 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
-@Styles.Render("~/Content/css/bootstrap")
+@*@Styles.Render("~/Content/css/bootstrap") *@
 <head>
-
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
@@ -11,7 +10,7 @@
 </head>
 <body>
     @Html.Partial("_NavBar")
-    
+    @Html.Partial("_SideBar")
     <div class="container body-content">
         @RenderBody()
         <hr />
