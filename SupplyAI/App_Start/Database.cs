@@ -9,16 +9,14 @@ using System.Web.Hosting;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MI3.Models;
+using System.Configuration;
 
 namespace MI3
 {
     //Class used for accessing MongoDB database w/ methods ofr easy & convenienct loading/storing
     public class Database
     {
-        //public const string AppName = "MI3";
-        private static readonly string LOGINPATH = @"App_Data/";
-        private static readonly string LOGINFILE = "login.pass";
-        private static readonly string CONNECTIONSTRING = @"mongodb+srv://{0}:{1}@c54-lnh7c.mongodb.net/test?retryWrites=true";
+        public const string AppName = "MI3";
         private static readonly string localconnect = "mongodb://localhost:27017";
         public static readonly string DefaultDatabase = "MI3";
         public MongoClient client { get; private set; }
@@ -27,8 +25,8 @@ namespace MI3
 
 
         public Database() {
-            var path = getConnectionString();
-           
+            var path = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            
             client = new MongoClient(path);
         }
         
@@ -53,39 +51,8 @@ namespace MI3
         }
         
 
-       
+      
 
-        /// <summary>
-        /// Reads the config file to load in user name and password
-        /// </summary>
-        /// <returns>returns string[2] ={ username, password }</returns>
-        private static string[] loadUserConfig() {
-            string filePath = HostingEnvironment.MapPath("~/bin/App_Data/");
-
-
-            
-            string[] config = File.ReadAllLines(filePath + LOGINFILE);
-            string username = "";
-            string password = "";
-            string[] split;
-            foreach(var s in config) {
-                split = s.Split(' '); //get config line
-                if(split.Length ==2) { //if config line has config specification
-                    if (split[0] == "username")
-                        username = split[1];
-                    else if (split[0] == "password")
-                        password = split[1];
-                }
-
-            }
-            return new string[] { username, password };
-        }
-        public static string getConnectionString() {
-            string path = AppDomain.CurrentDomain.BaseDirectory;
-            string[] config = loadUserConfig();
-            if (config == null) throw new Exception("Cannot load database login file");
-            return String.Format(CONNECTIONSTRING, config[0], config[1]);
-        }
        
 
 
