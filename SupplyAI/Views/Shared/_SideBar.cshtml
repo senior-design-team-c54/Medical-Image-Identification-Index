@@ -1,4 +1,7 @@
 ﻿@*@model MI3.Models.TagDictionary*@
+@using MI3.Models;
+@using Microsoft.AspNet.Identity;
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <style>
     .sidenav {
@@ -17,10 +20,9 @@
         border-top-width:5px;
         display:inline-block;
     }
-    .sidenav span{
+    .sidenav span {
         font-size:15px;
-        display:inline-block;
-      
+        display:inline-block;  
     }
 
         .sidenav a {
@@ -46,11 +48,26 @@
     @{
 
         <p>@Html.ActionLink("Search Database", "Index", "Search")</p>
-        <p>@Html.ActionLink("Upload Dataset", "Upload", "Repository")</p>
-        if (Request.IsAuthenticated)
+        if (!Request.IsAuthenticated)
         {
-            <p>@Html.ActionLink("Notifications", "Index", "Search")</p>
-            <p>@Html.ActionLink("My Datasets", "Index", "Search")</p>
+            <p>@Html.ActionLink("Upload Dataset", "Index", "Upload")</p>
+        }
+        else
+        {
+            int count;
+            Database db = new Database();
+            if (!User.IsInRole("admin"))
+            {
+                <p>@Html.ActionLink("Upload Dataset", "Index", "Upload")</p>
+                <p>@Html.ActionLink("My Datasets", "Index", "Search")</p>
+                count = db.Count<Notification>(Notification.MongoCollectionName, notif => notif.ForUserType == "user" && notif.UserName != User.Identity.GetUserName() && notif.Resolved == false);
+            }
+            else
+            {
+                <p>@Html.ActionLink("Manage Users", "Manage", "Users")</p>
+                count = db.Count<Notification>(Notification.MongoCollectionName, notif => notif.ForUserType == "admin" && notif.Resolved == false);
+            }
+            <p>@Html.ActionLink("Notifications" + " (" + count.ToString() + ")", "Index", "Notifications")</p>
         }
         /*
         string name = "";

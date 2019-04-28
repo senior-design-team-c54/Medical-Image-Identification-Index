@@ -1,0 +1,52 @@
+﻿@using Microsoft.AspNet.Identity;
+@using MI3.Models;
+
+@{
+    ViewBag.Title = "Notifications";
+}
+
+<h2>Notifications</h2>
+
+<div style="overflow-y: auto">
+    @if (Request.IsAuthenticated)
+    {
+        List<Notification> notifications = new List<Notification>();
+        string type;
+        Database db = new Database();
+        if (!User.IsInRole("admin"))
+        {
+            type = "user";
+            notifications = db.Find<Notification>(Notification.MongoCollectionName, doc => doc.ForUserType == type && doc.UserName == User.Identity.GetUserName());
+        }
+        else
+        {
+            type = "admin";
+            notifications = db.Find<Notification>(Notification.MongoCollectionName, doc => doc.ForUserType == type);
+        }
+
+        Type typeOfNotification;
+        object dynamicNotificationObject;
+        INotifiable notificationType;
+
+        if (notifications.Count() > 0)
+        {
+            foreach (var notification in notifications)
+            {
+                typeOfNotification = Type.GetType(notification.NotificationType + ", " + Database.AppName); // target type
+                dynamicNotificationObject = Activator.CreateInstance(typeOfNotification); // an instance of target type
+                notificationType = (INotifiable)dynamicNotificationObject;
+                <div class="jumbotron">
+                    <h3 style="font-style: normal;">@Html.ActionLink(notificationType.Title, "Review", "Notifications", new { notificationId = notification.Id }, null)</h3>
+                    <p>User: @notification.UserName</p>
+                    <p>Submission date: @notification.DateGenerated.ToLongDateString()</p>
+                </div>
+            }
+        }
+    }
+    else
+    {
+        <p></p>
+        <p>You currently have no new notifications.</p>
+        <p></p>
+    }
+</div>

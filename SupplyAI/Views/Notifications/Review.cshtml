@@ -1,0 +1,65 @@
+﻿@using MI3.Models;
+@model NewAbstractViewModel
+
+@{
+    ViewBag.Title = "Review";
+}
+
+<head>
+    <style>
+        th, td {
+            border-bottom: 1px solid #ddd;
+            padding: 15px;
+        }
+    </style>
+</head>
+
+<h2>@Model.Title</h2>
+
+<table>
+    <tr>
+        <th><em>User</em></th>
+        <th>@Model.UserName</th>
+    </tr>
+    <tr>
+        <th><em>Date submitted</em></th>
+        <th>@Model.DateGenerated.ToLongDateString()</th>
+    </tr>
+    <tr>
+        <th><em>Time submitted</em></th>
+        <th>@Model.DateGenerated.ToLongTimeString()</th>
+    </tr>
+    <tr>
+        <th><em>Dataset title</em></th>
+        <th></th>
+    </tr>
+    <tr>
+        <th><em>Authors</em></th>
+        <th></th>
+    </tr>
+    <tr>
+        <th><em>Main clinical issue</em></th>
+        <th></th>
+    </tr>
+    <tr>
+        <th><em>Modality</em></th>
+        <th></th>
+    </tr>
+    <tr>
+        <th><em>Approximate number of studies</em></th>
+        <th></th>
+    </tr>
+    <tr>
+        <th><em>Allow public access?</em></th>
+        <th>@Model.PublicAccess</th>
+    </tr>
+    <tr>
+        <th><em>Rehost data?</em></th>
+        <th>@Model.Rehost</th>
+    </tr>
+    <tr>
+        <th><em>Additional comments</em></th>
+        <th>@Model.Content</th>
+    </tr>
+
+</table>

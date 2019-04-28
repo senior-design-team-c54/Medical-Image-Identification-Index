@@ -27,12 +27,6 @@ namespace MI3.Controllers
         public ActionResult Index() {
 
             return View();
-        }
-
-        [HttpGet]
-        public ActionResult Upload()
-        {
-            return View();
-        }
+        } 
     }
 }
