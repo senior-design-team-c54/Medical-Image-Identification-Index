@@ -1,0 +1,42 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>Ping: <p id="ping"></p></div>
+
+
+
+<script>
+    console.log("START?");
+    var pingEl = document.getElementById("ping");
+    
+
+    var actionUrl = '@Url.Action("ReceiveHeartbeat", "Repository")';
+    var intervalMilliseconds = 4000;
+
+    function LaunchHeartBeat(myUrl) {
+        actionUrl = myUrl;
+        setInterval(HeartBeat, intervalMilliseconds);
+    }
+
+    function HeartBeat() {
+        console.log("Send heartbeat");
+        var tStart = (new Date()).toJSON(); //store current time
+        var outData = { date: tStart };
+        
+        $.ajax({
+            type: "POST",
+            url: actionUrl,
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(outData),
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                pingEl.innerText = data;
+            },
+            error: function () {
+                alert('Error sending/recieving heartbeat from server');
+            }
+        });
+    }
+    LaunchHeartBeat(actionUrl);
+</script>

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using MI3.Models.FormData;
+using MI3.Models.Repo;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace MI3.Models
@@ -26,21 +29,68 @@ namespace MI3.Models
         public string Label_Type { get; set; }
         public DateTime Publication_Date { get; set; }
         public List<Reference> References { get; set; }
-        public UInt64 ID { get; private set; }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string ID { get; set; }
+        public int TotalFiles { get; set; }
 
+        public RepoFolder root;
+        
 
-        public Series dataSeries;
+        public Repository(UploadMeta meta) {
+            //initialize new repository with metaData
+            root = new RepoFolder("");
+            Name = meta.name;
+            Summary = meta.summary;
+            if (meta.authors != null)
+                Authors = meta.authors.ToList();
+            else
+                Authors = new List<string>();
 
+            Availability = meta.availability;
+            Url = meta.url;
+            Peer_Reviewed = meta.peer_reviewed;
+            Data_Size = 0;
+            Label_Type = "None";
+            //ID = GenerateUniqueID();
+        }
 
 
         public Repository(string name = "None") {
-            ID = GenerateUniqueID();
+            //ID = GenerateUniqueID() ;
             Name = name;
+            root = new RepoFolder("");
         }
 
-        public void setSeriesData(Series data) {
-            dataSeries = data;
+        public void initializeFromZipMeta(UploadZipMeta zipMeta) {
+            root = new RepoFolder("");
+            TotalFiles = zipMeta.totalFiles;
+            RepoFolder add = null;
+            foreach(var file in zipMeta.files) {
+                if (file.EndsWith("/")) //is folder
+                    add = new RepoFolder(file);
+                //for now, only add folders, because we don't know if files are Dicom or labels or other
+                root.addFile(add);
+            }
+
         }
+        public bool addParseFile(UploadFile file) {
+            if (file == null) return false;
+            //now we figure out the file type and add it to the repo
+            RepoFile addFile = null;
+            if(file.type == Enum.GetName(typeof(FileType), FileType.Dicom)) {
+                //is dicom file
+                addFile = new RepoDicomFile(file);
+            }
+            if(file.type == Enum.GetName(typeof(FileType), FileType.Labels)) {
+                addFile = new RepoLabelsFile(file);
+            }
+            root.addFile(addFile);
+            return true;
+        }
+
+
+
 
         private void addTag(Tag t) {
             //dont allow duplicates

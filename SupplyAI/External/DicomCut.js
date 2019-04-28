@@ -1,33 +1,21 @@
-﻿//Defined hex values for searchable tags needed
-//Note: due to endianess the tags  need to be in reverse byte order to be found
-//For example, pixel data is (7FE0,0010) but is represented as E07F + 10000
+﻿//JS file that takes an input zip file of dicom images and sends their headers to the server.
 //
 
+function loadFiles(event) {
+    var file =event.target.files[0];
+    readZip(file);
+}
 
-
-FileInput.onchange = function() {
-	var file = this.files[0];
-	var ext = /^.+\.([^.]+)$/.exec(file.name);
-	
-	//if zip
-	if(ext == "zip"){
-		var zip = new JSZip();
-		zip.loadAsync(zipF /* = file blob */)
-		.then(zipParser, function () { alert("Not a valid zip file") }); 
-	}else{
-		//should be single dicom file
-		var reader = new FileReader();
-		reader.onload = function(e) {
-			var contents = e.target.result;
-			console.log(contents);
-			console.log(file);
-			var bytes = new Uint8Array(contents);
-			parseByteArray(bytes,file.name);
-		};
-		reader.readAsArrayBuffer(file);
-		
-		
-	}
+function readZip(file,zipFileFunc = zipParser) {
+    
+    var ext = /^.+\.([^.]+)$/.exec(file.name); //get extension
+    console.log(file);
+    console.log(ext);
+	//if zip	
+    var zip = new JSZip();
+    zip.loadAsync(file)
+	.then(data => zipFileFunc(data), function () { alert("Not a valid zip file") }); 
+  
 	
 	
 
@@ -35,23 +23,24 @@ FileInput.onchange = function() {
 
 
 function zipParser(zip) {
-    //console.log(zip);
+   // console.log(zip);
     for (f in zip.files) {
 		var file = zip.files[f];
 		//find extension
-		//console.log(file);
+		console.log(file);
 		if (file.name.endsWith('/')) {
             //is folder
             continue;
         }
 		//uses regex expression to find extension, or "" if nothing
 		var ext = /^.+\.([^.]+)$/.exec(file.name);
-        if(ext == null || ext.toLowerCase() == "dcm"){
+        if (ext == null || ext.toLowerCase() == "dcm") {
+            console.log("PARSE");
 			var name = file.name;
 			//should be a dicom file due to extension. Dont mess it up
-			file.internalStream("uint8array")
-			.accumulate((metadata) =>{}) //metadata contains 'percent' and 'currentFile'
-			.then((data)=>{parseByteArray(data,name);});
+            file.internalStream("uint8array")
+                .accumulate((metadata) => { }) //metadata contains 'percent' and 'currentFile'
+                .then((data) => { saveAs(parseByteArray(data)); });
 			
 		}
 		
@@ -60,11 +49,12 @@ function zipParser(zip) {
 }
 
 
-function parseByteArray(byteArray,name){
-	var sansImg = cutOutImgTag(byteArray);
+function parseByteArray(byteArray){
+    var sansImg = cutOutImgTag(byteArray);
+    //return sansImg.buffer;
 	var blob = new Blob([sansImg.buffer],{type: "octet/stream"});
-	console.log(name);
-	saveAs(blob,name);
+    return blob;
+
 	
 }
 
