@@ -23,7 +23,8 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                @*<li style="margin:10px;width:240px;"><input class="input-sm" style="width:inherit;" placeholder="Search" /></li>*@
+
+                <li style="margin:10px;width:240px;"><input id="searchBar" class="input-sm" a style="width:inherit;" placeholder="Search"  /></li>
                 <li>@Html.ActionLink("About", "About", "Home")</li>
                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 @*<li>@Html.ActionLink("Is Database Live?", "IsMongoDBLive", "Home")</li>*@
@@ -32,3 +33,16 @@
         </div>
     </div>
 </div>
+
+<script>
+
+    searchBar.onkeydown = function (event) {
+        
+        if (event.keyCode == 13) {
+            window.location.href = '@Url.Action("Index", "Search")' + "?query="+event.target.value;
+
+        }
+    }
+
+
+</script>

@@ -25,7 +25,7 @@ namespace MI3
 
 
         public Database() {
-            var path = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            var path = ConfigurationManager.ConnectionStrings["LocalHost"].ConnectionString;
             
             client = new MongoClient(path);
         }
@@ -50,7 +50,7 @@ namespace MI3
             coll.InsertOne(item);
         }
         
-
+     
       
 
        

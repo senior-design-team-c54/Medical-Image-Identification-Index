@@ -213,6 +213,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\FormData\UploadFile.cs" />
+    <Compile Include="Models\FormData\UploadMeta.cs" />
+    <Compile Include="Models\FormData\UploadRepo.cs" />
+    <Compile Include="Models\FormData\UploadZipMeta.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Repository.cs" />
@@ -221,6 +225,10 @@
     <Compile Include="Models\DICOM related\Series.cs" />
     <Compile Include="Models\DICOM related\Study.cs" />
     <Compile Include="Models\RepositoryDisplay.cs" />
+    <Compile Include="Models\Repo\RepoDicomFile.cs" />
+    <Compile Include="Models\Repo\RepoFile.cs" />
+    <Compile Include="Models\Repo\RepoFolder.cs" />
+    <Compile Include="Models\Repo\RepoLabelsFile.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\TagDictionary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -365,6 +373,8 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Repository\UploadDataSet.cshtml" />
+    <Content Include="Views\Repository\Heartbeat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

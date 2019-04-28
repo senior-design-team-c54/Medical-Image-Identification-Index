@@ -18,26 +18,22 @@ namespace MI3.Controllers
         public int hi = 0;
 
         // GET: Search/Index or Search
-        public ActionResult Index()
+        public ActionResult Index(string query)
         {
+            if (query == null) query = "";
             //must calculate total number of results
-            SearchResults =  Database.FindRepo(r => true);
-            ViewBag.Title =  SearchResults.Count +" Search Results";
-
-
-            return View(this);
+            SearchResults =  Database.FindRepo(r => r.Name.Contains(query));
+            ViewBag.Title =  SearchResults.Count + " Search Results";
+            return View(SearchResults);
         }
 
         // GET: Search/Tag/{name}
         [Route("Tag/{name}")]
         public ActionResult Tag(string name)
         {
-            SearchResults = Database.FindRepo(x => x.Tags.ContainsKey(name));
-            //var results= Database.Where(x => x.Tags.ContainsKey(name)); //find each database entry with a tag with key name
-            //the .ToDictionary method loops through each Value in results, and uses the input function to generate the key
-            //in other words, for each Repository value 'a', the key is a.id
-            //SearchResults = (RepositoryDictionary) results.ToDictionary(a => a.ID); 
-            return View("Index",this); //we need to specify 'Index', because otherwise it will look for the 'Tag' View
+            SearchResults = Database.FindRepo(x => x.Tags.ContainsKey(name)); //find each database entry with a tag with key name
+            
+            return View("Index", SearchResults); //we need to specify 'Index', because otherwise it will look for the 'Tag' View
         }
 
         // GET: Search/Author/{name}

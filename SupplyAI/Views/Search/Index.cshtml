@@ -48,6 +48,7 @@
     }
 
         .tag:hover {
+
             text-decoration: none;
             background-color: #aee1ff;
             color: #1b1b1b;
@@ -55,13 +56,14 @@
 </style>
 
 
-@model MI3.Controllers.SearchController
+@model List<MI3.Models.Repository>
 
-@Html.Partial("_SideBar", MI3.Startup.Tags);
+@Html.Partial("_SideBar", MI3.Startup.Tags)
 
 @{
     string alternate = "";
-    foreach (var data in Model.SearchResults) {
+    
+    foreach (var data in Model) {
         if (alternate == "even") { alternate = "odd"; } else { alternate = "even"; }
         <div class="collection row container">
             <!--
@@ -70,7 +72,13 @@
             -->
             <div class="col-lg-11">
                 <div class="row">
-                    @Html.ActionLink(data.Name, "View", "Repository", new { id = data.ID }, new { @class = "title" })
+                    @{
+                        string name = data.Name;
+                        if (name == null) {
+                            name = "NO NAME FOUND";
+                        }
+                    @Html.ActionLink(name, "View", "Repository", new { id = data.ID }, new { @class = "title" })
+                        }
                 </div>
                 <div class="row">
                     Authors:
