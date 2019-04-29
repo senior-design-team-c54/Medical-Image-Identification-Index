@@ -60,6 +60,8 @@ namespace MI3
     
     public static class MongoDBExtensions
     {
+
+
         public static bool isDatabaseAvailable(this MongoClient client) {
             var probeTask =
                     Task.Run(() => {

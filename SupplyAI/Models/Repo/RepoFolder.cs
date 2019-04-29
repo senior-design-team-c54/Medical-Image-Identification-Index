@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Linq;
+using Dicom;
 
 namespace MI3.Models.Repo
 {
     public class RepoFolder : RepoFile
     {
 
-        public List<RepoDicomFile> DicomFiles => _items.Where(f => f.fileType == FileType.Dicom).Cast<RepoDicomFile>().ToList();
+        public List<DicomFile> DicomFiles => _items.Where(f => f.fileType == FileType.Dicom).Select(f => ((RepoDicomFile)f).dicomFile).ToList();
         public List<RepoFile> Files { get { return _items.Where(f => f.fileType != FileType.Folder).ToList(); } }
         public List<RepoFolder> Folders { get { return _items.Where(f => f is RepoFolder).Cast<RepoFolder>().ToList(); } }
-        public List<RepoFile> Items => _items;
+
+        public List<RepoFile> Items { get { return _items; } set { _items = value; } }
 
         /// <summary>
         /// absolute folder name
@@ -21,7 +23,7 @@ namespace MI3.Models.Repo
         /// <summary>
         /// All folders and files childed to this object
         /// </summary>
-        List<RepoFile> _items;
+        public List<RepoFile> _items;
 
 
         public RepoFolder(string name) {
@@ -55,6 +57,12 @@ namespace MI3.Models.Repo
 
         }
         
+        public bool containsTag(Dicom.DicomTag tag) {
+            foreach(var dicom in DicomFiles) {
+                if (dicom.Dataset.Contains(tag)) return true;
+            }
+            return false;
+        }
 
     }
 }

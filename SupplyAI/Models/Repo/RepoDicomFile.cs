@@ -13,7 +13,7 @@ namespace MI3.Models.Repo
 
     public class RepoDicomFile : RepoFile
     {
-        Dicom.DicomFile dicomFile;
+        public Dicom.DicomFile dicomFile;
         
 
         public RepoDicomFile(UploadFile file) {
