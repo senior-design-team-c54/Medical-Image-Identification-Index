@@ -74,7 +74,7 @@ namespace MI3
         public const string AppName = "Medical Image Identification Index";
 
         public static Database Database { get; private set; }
-        public static MongoClient client { get { return Database.Client; } }
+        public static MongoClient client { get { return Database.client; } }
         
        // public static readonly RepositoryDictionary Database = new RepositoryDictionary();
         public static readonly TagDictionary Tags = new TagDictionary();

@@ -38,12 +38,14 @@ namespace MI3.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SubmitAbstract(AbstractViewModel model)
         {
+            /*
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
+            */
 
-            Abstract newAbstract = new Abstract(User.Identity.GetUserName(), model.Url, model.Rehost, model.PublicAccess, model.Content);
+            Abstract newAbstract = new Abstract(User.Identity.GetUserName(), model);
             var notification = newAbstract.GenerateNewAbstractNotification();
 
             newAbstract.AddToDb();

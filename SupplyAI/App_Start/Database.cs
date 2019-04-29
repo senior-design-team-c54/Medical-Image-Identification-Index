@@ -20,7 +20,7 @@ namespace MI3
         // private static readonly string localconnect = "mongodb://localhost:27017";
         public static readonly string DefaultDatabase = "MI3";
         public static readonly string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-        public MongoClient Client { get; private set; }
+        public MongoClient client { get; private set; }
         public IMongoDatabase DefaultDB { get { return (new MongoClient(connectionString)).GetDatabase((new MongoUrl(connectionString)).DatabaseName); } }
         public IMongoCollection<Repository> DataCollection { get { return DefaultDB.GetCollection<Repository>("Repository"); } }
 
@@ -28,12 +28,12 @@ namespace MI3
         public Database() {
             var path = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             
-            Client = new MongoClient(path);
+            client = new MongoClient(path);
         }
         
 
         public MongoDatabaseBase GetDatabase(string name) {
-            return (MongoDatabaseBase)Client.GetDatabase(name);
+            return (MongoDatabaseBase)client.GetDatabase(name);
         }
         public List<Repository> FindRepo(Expression<Func<Repository, bool>> filter) {
             return DataCollection.Find(filter).ToList();
@@ -72,8 +72,7 @@ namespace MI3
             coll.UpdateOne(filter, mongoUpdate);
         }
     }
-    
-    /*
+   
     public static class MongoDBExtensions
     {
         public static bool isDatabaseAvailable(this MongoClient client) {
@@ -97,11 +96,6 @@ namespace MI3
                     });
             probeTask.Wait();
             return probeTask.Result;
-        }
-
-       
-
-    }
-    */
-  
+        }  
+    } 
 }

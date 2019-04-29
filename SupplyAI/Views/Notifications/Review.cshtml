@@ -8,7 +8,7 @@
 <head>
     <style>
         th, td {
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #eee;
             padding: 15px;
         }
     </style>
@@ -16,6 +16,9 @@
 
 <h2>@Model.Title</h2>
 
+@using (Html.BeginForm("Review", "Notifications", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
 <table>
     <tr>
         <th><em>User</em></th>
@@ -31,35 +34,143 @@
     </tr>
     <tr>
         <th><em>Dataset title</em></th>
-        <th></th>
+        <th>@Model.DatasetTitle</th>
     </tr>
     <tr>
         <th><em>Authors</em></th>
-        <th></th>
+        <th>@Model.Authors</th>
+    </tr>
+    <tr>
+        <th><em>Institutional source</em></th>
+        <th>@Model.Source</th>
     </tr>
     <tr>
         <th><em>Main clinical issue</em></th>
-        <th></th>
+        <th>@Model.ClinicalIssues</th>
     </tr>
     <tr>
-        <th><em>Modality</em></th>
-        <th></th>
+        <th><em>All studies have same modality/manufacturer</em></th>
+        <th>@Model.SameModalityAndManuf</th>
+    </tr>
+    @if (Model.SameModalityAndManuf)
+    {
+        <tr>
+            <th><em>Modality</em></th>
+            <th>@Model.Modality</th>
+        </tr>
+        <tr>
+            <th><em>Manufacturer</em></th>
+            <th>@Model.Manufacturer</th>
+        </tr>
+        <tr>
+            <th><em>Description of model/software versions</em></th>
+            <th>@Model.ModelsAndVersions</th>
+        </tr>
+    }
+    else
+    {
+        <tr>
+            <th><em>Description of modalities/manufacturers</em></th>
+            <th>@Model.MultipleModalitiesAndManuf</th>
+        </tr>
+    }
+    <tr>
+        <th><em>Requests that data be rehosted</em></th>
+        <th>@Model.Rehost</th>
     </tr>
     <tr>
-        <th><em>Approximate number of studies</em></th>
-        <th></th>
+        <th><em>URL</em></th>
+        <th>@Model.Url</th>
     </tr>
     <tr>
-        <th><em>Allow public access?</em></th>
+        <th><em>Allow public access to data</em></th>
         <th>@Model.PublicAccess</th>
     </tr>
     <tr>
-        <th><em>Rehost data?</em></th>
-        <th>@Model.Rehost</th>
+        <th><em>Dataset has labels</em></th>
+        <th>@Model.HasLabels</th>
+    </tr>
+    @if (Model.HasLabels)
+    {
+        <tr>
+            <th><em>Label strength</em></th>
+            <th>@Model.LabelType</th>
+        </tr>
+        <tr>
+            <th><em>Labels are peer-reviewed</em></th>
+            <th>@Model.LabelsReviewed</th>
+        </tr>
+        <tr>
+            <th><em>At which level can the labels be found</em></th>
+            <th>@Model.LabelsReviewed</th>
+        </tr>
+        <tr>
+            <th><em>Label format</em></th>
+            <th>@Model.LabelFormat</th>
+        </tr>
+    }
+    <tr>
+        <th><em>Approximate number of studies</em></th>
+        <th>@Model.NumberOfStudies</th>
+    </tr>
+    <tr>
+        <th><em>Country from which data originated</em></th>
+        <th>@Model.Country</th>
+    </tr>
+    @if (Model.Country == "United States")
+    {
+        <tr>
+            <th><em>Region</em></th>
+            <th>@Model.USRegion</th>
+        </tr>
+        <tr>
+            <th><em>State</em></th>
+            <th>@Model.State</th>
+        </tr>
+    }
+    <tr>
+        <th><em>Is any of the pixel data shifted</em></th>
+        <th>@Model.PixelDataShifted</th>
+    </tr>
+    @if (Model.PixelDataShifted == "Yes")
+    {
+        <tr>
+            <th><em>Explanation of pixel shifting</em></th>
+            <th>@Model.HowPixelDataShifted</th>
+        </tr>
+    }
+    <tr>
+        <th><em>Is any of the pixel data synthesized</em></th>
+        <th>@Model.PixelDataSynthesized</th>
+    </tr>
+    @if (Model.PixelDataShifted == "Yes")
+    {
+        <tr>
+            <th><em>Explanation of pixel synthesis</em></th>
+            <th>@Model.HowPixelDataSynthesized</th>
+        </tr>
+    }
+    <tr>
+        <th><em>Data has been anonymized</em></th>
+        <th>@Model.IsAnonymized</th>
+    </tr>
+    <tr>
+        <th><em>Explanation of anonymization</em></th>
+        <th>@Model.HowAnonymized</th>
     </tr>
     <tr>
         <th><em>Additional comments</em></th>
         <th>@Model.Content</th>
     </tr>
-
 </table>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10" style="padding-top: 20px;">
+            <input type="submit" class="btn btn-default" value="Approve" />
+        </div>
+        <div class="col-md-offset-2 col-md-10" style="padding-top: 20px;">
+            <input type="submit" class="btn btn-default" value="Deny" />
+        </div>
+    </div>
+}
+
+
