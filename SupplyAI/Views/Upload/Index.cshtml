@@ -8,7 +8,9 @@
 }
 
 <p>
-    <h3><strong>Upload a DICOM image dataset</strong></h3>
+    <h2>Upload.</h2>
+    <h4>Submit a DICOM image dataset</h4>
+    <hr />
 </p>
 
 @*
@@ -33,10 +35,8 @@
 {
     var result = (new Database()).FindOne<Abstract>("Abstracts", doc => doc.UserName == User.Identity.GetUserName() && doc.Reviewed == false);
     if (result != null)
-    {
-        <h4>
-            Your current submission request is still pending review.  We will notify you when we have finished processing your abstract.
-        </h4>
+    {    
+        <p>Your current submission request is still pending review.  We will notify you when we have finished processing your abstract.</p>
     }
     else
     {

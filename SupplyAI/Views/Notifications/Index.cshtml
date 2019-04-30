@@ -5,7 +5,38 @@
     ViewBag.Title = "Notifications";
 }
 
-<h2>Notifications</h2>
+<h2>Notifications.</h2>
+<hr />
+
+<head>
+    <style>
+        .notif-div-new {
+            padding-top: 15px;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            background-color: #c6deff;
+            border-radius: 10px;
+            margin: 10px;
+            display: inline-block;
+            clear: both;
+        }
+
+        .notif-div-resolved {
+            padding-top: 15px;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            background-color: #eee;
+            border-radius: 10px;
+            margin: 10px;
+            display: inline-block;
+            clear: both;
+        }
+
+        .notif-div-new:hover {
+            background-color: #a0cfec;
+        }
+    </style>
+</head>
 
 <div style="overflow-y: auto">
     @if (Request.IsAuthenticated)
@@ -24,6 +55,9 @@
             notifications = db.Find<Notification>(Notification.MongoCollectionName, doc => doc.ForUserType == type);
         }
 
+        notifications.Sort((x, y) => DateTime.Compare(y.DateGenerated, x.DateGenerated));
+        notifications.Sort((x, y) => x.Resolved.CompareTo(y.Resolved));
+
         Type typeOfNotification;
         object dynamicNotificationObject;
         INotifiable notificationType;
@@ -35,18 +69,36 @@
                 typeOfNotification = Type.GetType(notification.NotificationType + ", " + Database.AppName); // target type
                 dynamicNotificationObject = Activator.CreateInstance(typeOfNotification); // an instance of target type
                 notificationType = (INotifiable)dynamicNotificationObject;
-                <div class="jumbotron">
-                    <h3 style="font-style: normal;">@Html.ActionLink(notificationType.Title, "Review", "Notifications", new { notificationId = notification.Id }, null)</h3>
-                    <p>User: @notification.UserName</p>
-                    <p>Submission date: @notification.DateGenerated.ToLongDateString()</p>
-                </div>
+                if (!notification.Resolved)
+                {
+                    <div class="notif-div-new">
+                        <div style="padding: 10px; margin-left: 20px; margin-right: 20px">
+                            <h4><strong>@Html.ActionLink(notificationType.Title, "Review", "Notifications", new { notificationId = notification.Id }, null)</strong></h4>
+                            <p>User: @notification.UserName</p>
+                            <p>Submission date: @notification.DateGenerated.ToLongDateString(), @notification.DateGenerated.ToLongTimeString()</p>
+                        </div>
+                    </div>
+                    <br />
+                }
+                else
+                {
+                    <div class="notif-div-resolved">
+                        <div style="padding: 10px; margin-left: 20px; margin-right: 20px">
+                            <h4><strong>@notificationType.Title</strong></h4>
+                            <p>User: @notification.UserName</p>
+                            <p>Submission date: @notification.DateGenerated.ToLongDateString(), @notification.DateGenerated.ToLongTimeString()</p>
+                            <p>Date resolved: @notification.DateResolved.ToLongDateString(), @notification.DateResolved.ToLongTimeString()</p>
+                        </div>
+                    </div>
+                    <br />
+                }
             }
         }
-    }
-    else
-    {
-        <p></p>
-        <p>You currently have no new notifications.</p>
-        <p></p>
+        else
+        {
+            <p></p>
+            <p>You currently have no new notifications.</p>
+            <p></p>
+        }
     }
 </div>

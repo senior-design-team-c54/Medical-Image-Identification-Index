@@ -77,9 +77,7 @@ namespace MI3.Models
         [BsonElement]
         public bool Approved { get; set; }
         [BsonElement]
-        public bool IsAnonymized { get; set; }
-        [BsonElement]
-        public string HowAnonymized { get; set; }
+        public string Rationale { get; set; }
         [BsonElement]
         public bool Reviewed { get; set; }
         [BsonElement]
@@ -90,6 +88,10 @@ namespace MI3.Models
         public string DatasetId { get; set; }
         [BsonElement]
         public DateTime DateGenerated { get; set; }
+        [BsonElement]
+        public bool IsAnonymized { get; set; }
+        [BsonElement]
+        public string HowAnonymized { get; set; }
         [BsonElement]
         public bool SameModalityAndManuf { get; set; }
         [BsonElement]
@@ -201,9 +203,10 @@ namespace MI3.Models
             DateGenerated = DateTime.Now;
         }
 
-        public void Review(string admin, bool approved)
+        public void Review(string admin, bool approved, string rationale)
         {
             Approved = approved;
+            Rationale = rationale;
             Reviewed = true;
             ReviewedBy = admin;
             DateReviewed = DateTime.Now;
@@ -214,6 +217,12 @@ namespace MI3.Models
         {
             Database db = new Database();
             db.Add<Abstract>(MongoCollectionName, this);
+        }
+
+        public void UpdateInDb()
+        {
+            Database db = new Database();
+            db.Replace<Abstract>(MongoCollectionName, doc => doc.Id == Id, this);
         }
 
         public Notification GenerateNewAbstractNotification()

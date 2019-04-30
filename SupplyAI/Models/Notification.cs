@@ -79,11 +79,10 @@ namespace MI3.Models
         [BsonConstructor]
         public Notification() { }
 
-        [Authorize(Roles = "admin")]
-        public void Resolve()
+        public void Resolve(string admin)
         {
             Resolved = true;
-            //ResolvedBy =
+            ResolvedBy = admin;
             DateResolved = DateTime.Now;
         }
 
@@ -91,6 +90,12 @@ namespace MI3.Models
         {
             Database db = new Database();
             db.Add<Notification>(MongoCollectionName, this);
+        }
+
+        public void UpdateInDb()
+        {
+            Database db = new Database();
+            db.Replace<Notification>(MongoCollectionName, doc => doc.Id == Id, this);
         }
     }
 

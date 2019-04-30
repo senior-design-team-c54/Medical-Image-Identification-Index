@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MI3.Models;
+using Microsoft.AspNet.Identity;
+using System.Threading.Tasks;
 
 namespace MI3.Controllers
 {
@@ -18,7 +20,7 @@ namespace MI3.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public ActionResult Review(string notificationId)
         {
             Database db = new Database();
@@ -66,7 +68,29 @@ namespace MI3.Controllers
                 DateGenerated = attachment.DateGenerated
             };
 
-            return View(viewModel);
+            ViewBag.viewModel = viewModel;
+
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult> Review(NewAbstractViewModel model)
+        {
+            Database db = new Database();
+            Notification notification = db.FindOne<Notification>(Notification.MongoCollectionName, doc => doc.Id == model.NotificationId);
+            notification.Resolve(User.Identity.GetUserName());
+            notification.UpdateInDb();
+
+            Abstract reviewedAbstract = db.FindOne<Abstract>("Abstracts", doc => doc.Id == model.AttachmentId);
+            reviewedAbstract.Review(User.Identity.GetUserName(), model.Approved, model.Rationale);
+            reviewedAbstract.UpdateInDb();
+
+            EmailModel email = new EmailModel(reviewedAbstract.UserName);
+            email.MakeAbstractReviewedEmail(model.Approved, model.Rationale);
+            await email.Send();
+
+            return View("Index");
         }
     }
 }

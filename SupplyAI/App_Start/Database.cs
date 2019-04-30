@@ -71,6 +71,12 @@ namespace MI3
             var mongoUpdate = Builders<T>.Update.Set(update, value);
             coll.UpdateOne(filter, mongoUpdate);
         }
+
+        public void Replace<T>(string collection, Expression<Func<T, bool>> filter, T replacement)
+        {
+            var coll = DefaultDB.GetCollection<T>(collection);
+            coll.ReplaceOne<T>(filter, replacement);
+        }
     }
    
     public static class MongoDBExtensions

@@ -219,6 +219,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Abstract.cs" />
+    <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\FormData\UploadFile.cs" />
     <Compile Include="Models\FormData\UploadMeta.cs" />
     <Compile Include="Models\FormData\UploadRepo.cs" />

@@ -14,162 +14,173 @@
     </style>
 </head>
 
-<h2>@Model.Title</h2>
+<h2>@ViewBag.viewModel.Title</h2>
 
 @using (Html.BeginForm("Review", "Notifications", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-<table>
-    <tr>
-        <th><em>User</em></th>
-        <th>@Model.UserName</th>
-    </tr>
-    <tr>
-        <th><em>Date submitted</em></th>
-        <th>@Model.DateGenerated.ToLongDateString()</th>
-    </tr>
-    <tr>
-        <th><em>Time submitted</em></th>
-        <th>@Model.DateGenerated.ToLongTimeString()</th>
-    </tr>
-    <tr>
-        <th><em>Dataset title</em></th>
-        <th>@Model.DatasetTitle</th>
-    </tr>
-    <tr>
-        <th><em>Authors</em></th>
-        <th>@Model.Authors</th>
-    </tr>
-    <tr>
-        <th><em>Institutional source</em></th>
-        <th>@Model.Source</th>
-    </tr>
-    <tr>
-        <th><em>Main clinical issue</em></th>
-        <th>@Model.ClinicalIssues</th>
-    </tr>
-    <tr>
-        <th><em>All studies have same modality/manufacturer</em></th>
-        <th>@Model.SameModalityAndManuf</th>
-    </tr>
-    @if (Model.SameModalityAndManuf)
-    {
+    <table>
         <tr>
-            <th><em>Modality</em></th>
-            <th>@Model.Modality</th>
+            <th><em>User</em></th>
+            <th>@ViewBag.viewModel.UserName</th>
         </tr>
         <tr>
-            <th><em>Manufacturer</em></th>
-            <th>@Model.Manufacturer</th>
+            <th><em>Date submitted</em></th>
+            <th>@ViewBag.viewModel.DateGenerated.ToLongDateString()</th>
         </tr>
         <tr>
-            <th><em>Description of model/software versions</em></th>
-            <th>@Model.ModelsAndVersions</th>
-        </tr>
-    }
-    else
-    {
-        <tr>
-            <th><em>Description of modalities/manufacturers</em></th>
-            <th>@Model.MultipleModalitiesAndManuf</th>
-        </tr>
-    }
-    <tr>
-        <th><em>Requests that data be rehosted</em></th>
-        <th>@Model.Rehost</th>
-    </tr>
-    <tr>
-        <th><em>URL</em></th>
-        <th>@Model.Url</th>
-    </tr>
-    <tr>
-        <th><em>Allow public access to data</em></th>
-        <th>@Model.PublicAccess</th>
-    </tr>
-    <tr>
-        <th><em>Dataset has labels</em></th>
-        <th>@Model.HasLabels</th>
-    </tr>
-    @if (Model.HasLabels)
-    {
-        <tr>
-            <th><em>Label strength</em></th>
-            <th>@Model.LabelType</th>
+            <th><em>Time submitted</em></th>
+            <th>@ViewBag.viewModel.DateGenerated.ToLongTimeString()</th>
         </tr>
         <tr>
-            <th><em>Labels are peer-reviewed</em></th>
-            <th>@Model.LabelsReviewed</th>
+            <th><em>Dataset title</em></th>
+            <th>@ViewBag.viewModel.DatasetTitle</th>
         </tr>
         <tr>
-            <th><em>At which level can the labels be found</em></th>
-            <th>@Model.LabelsReviewed</th>
+            <th><em>Authors</em></th>
+            <th>@ViewBag.viewModel.Authors</th>
         </tr>
         <tr>
-            <th><em>Label format</em></th>
-            <th>@Model.LabelFormat</th>
-        </tr>
-    }
-    <tr>
-        <th><em>Approximate number of studies</em></th>
-        <th>@Model.NumberOfStudies</th>
-    </tr>
-    <tr>
-        <th><em>Country from which data originated</em></th>
-        <th>@Model.Country</th>
-    </tr>
-    @if (Model.Country == "United States")
-    {
-        <tr>
-            <th><em>Region</em></th>
-            <th>@Model.USRegion</th>
+            <th><em>Institutional source</em></th>
+            <th>@ViewBag.viewModel.Source</th>
         </tr>
         <tr>
-            <th><em>State</em></th>
-            <th>@Model.State</th>
+            <th><em>Main clinical issue</em></th>
+            <th>@ViewBag.viewModel.ClinicalIssues</th>
         </tr>
-    }
-    <tr>
-        <th><em>Is any of the pixel data shifted</em></th>
-        <th>@Model.PixelDataShifted</th>
-    </tr>
-    @if (Model.PixelDataShifted == "Yes")
-    {
         <tr>
-            <th><em>Explanation of pixel shifting</em></th>
-            <th>@Model.HowPixelDataShifted</th>
+            <th><em>All studies have same modality/manufacturer</em></th>
+            <th>@ViewBag.viewModel.SameModalityAndManuf</th>
         </tr>
-    }
-    <tr>
-        <th><em>Is any of the pixel data synthesized</em></th>
-        <th>@Model.PixelDataSynthesized</th>
-    </tr>
-    @if (Model.PixelDataShifted == "Yes")
-    {
+        @if (ViewBag.viewModel.SameModalityAndManuf)
+        {
+            <tr>
+                <th><em>Modality</em></th>
+                <th>@ViewBag.viewModel.Modality</th>
+            </tr>
+            <tr>
+                <th><em>Manufacturer</em></th>
+                <th>@ViewBag.viewModel.Manufacturer</th>
+            </tr>
+            <tr>
+                <th><em>Description of model/software versions</em></th>
+                <th>@ViewBag.viewModel.ModelsAndVersions</th>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <th><em>Description of modalities/manufacturers</em></th>
+                <th>@ViewBag.viewModel.MultipleModalitiesAndManuf</th>
+            </tr>
+        }
         <tr>
-            <th><em>Explanation of pixel synthesis</em></th>
-            <th>@Model.HowPixelDataSynthesized</th>
+            <th><em>Requests that data be rehosted</em></th>
+            <th>@ViewBag.viewModel.Rehost</th>
         </tr>
-    }
-    <tr>
-        <th><em>Data has been anonymized</em></th>
-        <th>@Model.IsAnonymized</th>
-    </tr>
-    <tr>
-        <th><em>Explanation of anonymization</em></th>
-        <th>@Model.HowAnonymized</th>
-    </tr>
-    <tr>
-        <th><em>Additional comments</em></th>
-        <th>@Model.Content</th>
-    </tr>
-</table>
+        <tr>
+            <th><em>URL</em></th>
+            <th>@ViewBag.viewModel.Url</th>
+        </tr>
+        <tr>
+            <th><em>Allow public access to data</em></th>
+            <th>@ViewBag.viewModel.PublicAccess</th>
+        </tr>
+        <tr>
+            <th><em>Dataset has labels</em></th>
+            <th>@ViewBag.viewModel.HasLabels</th>
+        </tr>
+        @if (ViewBag.viewModel.HasLabels)
+        {
+            <tr>
+                <th><em>Label strength</em></th>
+                <th>@ViewBag.viewModel.LabelType</th>
+            </tr>
+            <tr>
+                <th><em>Labels are peer-reviewed</em></th>
+                <th>@ViewBag.viewModel.LabelsReviewed</th>
+            </tr>
+            <tr>
+                <th><em>At which level can the labels be found</em></th>
+                <th>@ViewBag.viewModel.LabelsReviewed</th>
+            </tr>
+            <tr>
+                <th><em>Label format</em></th>
+                <th>@ViewBag.viewModel.LabelFormat</th>
+            </tr>
+        }
+        <tr>
+            <th><em>Approximate number of studies</em></th>
+            <th>@ViewBag.viewModel.NumberOfStudies</th>
+        </tr>
+        <tr>
+            <th><em>Country from which data originated</em></th>
+            <th>@ViewBag.viewModel.Country</th>
+        </tr>
+        @if (ViewBag.viewModel.Country == "United States")
+        {
+            <tr>
+                <th><em>Region</em></th>
+                <th>@ViewBag.viewModel.USRegion</th>
+            </tr>
+            <tr>
+                <th><em>State</em></th>
+                <th>@ViewBag.viewModel.State</th>
+            </tr>
+        }
+        <tr>
+            <th><em>Is any of the pixel data shifted</em></th>
+            <th>@ViewBag.viewModel.PixelDataShifted</th>
+        </tr>
+        @if (ViewBag.viewModel.PixelDataShifted == "Yes")
+        {
+            <tr>
+                <th><em>Explanation of pixel shifting</em></th>
+                <th>@ViewBag.viewModel.HowPixelDataShifted</th>
+            </tr>
+        }
+        <tr>
+            <th><em>Is any of the pixel data synthesized</em></th>
+            <th>@ViewBag.viewModel.PixelDataSynthesized</th>
+        </tr>
+        @if (ViewBag.viewModel.PixelDataShifted == "Yes")
+        {
+            <tr>
+                <th><em>Explanation of pixel synthesis</em></th>
+                <th>@ViewBag.viewModel.HowPixelDataSynthesized</th>
+            </tr>
+        }
+        <tr>
+            <th><em>Data has been anonymized</em></th>
+            <th>@ViewBag.viewModel.IsAnonymized</th>
+        </tr>
+        <tr>
+            <th><em>Explanation of anonymization</em></th>
+            <th>@ViewBag.viewModel.HowAnonymized</th>
+        </tr>
+        <tr>
+            <th><em>Additional comments</em></th>
+            <th>@ViewBag.viewModel.Content</th>
+        </tr>
+    </table>
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10" style="padding-top: 20px;">
-            <input type="submit" class="btn btn-default" value="Approve" />
+        <div class="col-md-offset-2 col-md-10" style="padding-top: 15px;">
+            Approve
+            @Html.RadioButtonFor(m => m.Approved, "true")
+            Reject
+            @Html.RadioButtonFor(m => m.Approved, "false")
         </div>
-        <div class="col-md-offset-2 col-md-10" style="padding-top: 20px;">
-            <input type="submit" class="btn btn-default" value="Deny" />
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <p>Provide feedback for user:</p>
+            @Html.TextAreaFor(m => m.Rationale, new { @class = "form-control" })
         </div>
+    </div>
+    <input type="hidden" name="@Html.NameFor(m => m.NotificationId)" value="@ViewBag.viewModel.NotificationId" />
+    <input type="hidden" name="@Html.NameFor(m => m.AttachmentId)" value="@ViewBag.viewModel.AttachmentId" />
+    <div class="col-md-offset-2 col-md-10" style="padding-top: 20px;">
+        <input type="submit" class="btn btn-default" value="Submit" />
     </div>
 }
 

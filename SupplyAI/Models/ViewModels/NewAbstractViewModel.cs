@@ -16,11 +16,14 @@ namespace MI3.Models
         public bool Rehost { get; set; }
         public bool PublicAccess { get; set; }
         public string Content { get; set; }
+
         public bool Approved { get; set; }
+        public string Rationale { get; set; }
         public bool Reviewed { get; set; }
         public string ReviewedBy { get; set; }  // Mongo GUID for admin who approved/denied request
         public DateTime DateReviewed { get; set; }
-        public string DatasetTitle { get; set; }        
+        public string DatasetTitle { get; set; }  
+        
         public string Authors { get; set; }
         public string Source { get; set; }
         public int NumberOfStudies { get; set; }               
