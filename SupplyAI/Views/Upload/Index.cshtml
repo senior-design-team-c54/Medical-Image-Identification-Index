@@ -51,8 +51,8 @@
              * request, you can either use User.Identity.GetUserName() (gets username of whoever made the current http request) OR
              * you can use approvedAbstract.UserName since both will be the same.  Any other info you want to associate with the dataset,
              * e.g., title, authors, etc. you should be able to get using approvedAbstract's properties.  Once you have the dataset 
-             * uploaded, please update the "DataSetId" (the Mongo GUID for the document associated with that dataset in the DB) property 
-             * of the approvedAbstract and call the method "UpdateInDb()" and that will save your changes to that abstract.
+             * uploaded, please update the "DatasetId" (the Mongo GUID for the document associated with that dataset in the DB) property 
+             * of the approvedAbstract and call the method "UpdateInDb()" on approvedAbstract and that will save your changes for that abstract.
             */
         }
         else

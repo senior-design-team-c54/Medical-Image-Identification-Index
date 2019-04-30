@@ -31,8 +31,8 @@ namespace MI3.Models
                 "They have provided the following feedback:</p>{0}",
                 "<p><em>" + rationale + "</em></p>") : "";
             string closing = approved ? "<p>Please log back into your account and " +
-                "return to the 'Upload' page to complete the dataset upload process.</p>" :
-                "<p>You can submit another abstract by logging back in and returning to the 'Upload' page.</p>";
+                "return to the 'Upload Dataset' page to complete the upload process.</p>" :
+                "<p>You can submit another abstract by logging back in and returning to the 'Upload Dataset' page.</p>";
             string signature = "<p>Thank you.</p><p>-The MI3 Staff</p>";
             Body = string.Format(bodyHeader + "<p>One of our administrators has reviewed your abstract, and your " +
                 "submission request has been {0}.  {1} {2}" + signature, approveOrReject, feedback, closing);          
