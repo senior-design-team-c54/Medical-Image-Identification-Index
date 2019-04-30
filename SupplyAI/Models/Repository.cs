@@ -88,7 +88,10 @@ namespace MI3.Models
             root.addFile(addFile);
             return true;
         }
-
+        public bool hasDicomTag(Dicom.DicomTag tag) {
+            if(tag == null) return false;
+            return root.containsTag(tag);
+        }
 
 
 
