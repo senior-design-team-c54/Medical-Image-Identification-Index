@@ -404,6 +404,8 @@
     <Content Include="Views\Notifications\Index.cshtml" />
     <Content Include="Views\Users\Manage.cshtml" />
     <Content Include="Views\Notifications\Review.cshtml" />
+    <Content Include="Views\Upload\_TermsConditions.cshtml" />
+    <Content Include="Views\Upload\_UploadInstructions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

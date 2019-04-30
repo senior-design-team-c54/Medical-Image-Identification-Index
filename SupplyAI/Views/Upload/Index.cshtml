@@ -33,118 +33,41 @@
 
 @if (Request.IsAuthenticated)
 {
-    var result = (new Database()).FindOne<Abstract>("Abstracts", doc => doc.UserName == User.Identity.GetUserName() && doc.Reviewed == false);
-    if (result != null)
-    {    
-        <p>Your current submission request is still pending review.  We will notify you when we have finished processing your abstract.</p>
+    Database db = new Database();
+    var reviewedAbstract = db.FindOne<Abstract>("Abstracts", doc => doc.UserName == User.Identity.GetUserName() && doc.Reviewed == false);
+    if (reviewedAbstract != null)
+    {
+        <p>
+            Your current submission request is still pending review.  We will notify you when we have finished processing your abstract.
+        </p>
     }
     else
     {
-
-        <p>
-            Please follow these instructions (not how I want to word this, but you get the idea):
-            <ol>
-                <li><em>Images must be in DICOM (version #) format</em></li>
-                <li><em>All images must be in a single ZIP folder in your local file directory</em></li>
-                <li><em>Ensure that you have an active URL at which the designated files can be accessed</em></li>
-                <li><em>etc., etc., etc.</em></li>
-            </ol>
-        </p>
-        <p>
-            Before proceeding, please read the following list of terms of conditions carefully:
-        </p>
-        /*
-        @using (Html.BeginForm("Index", "Upload", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        var approvedAbstract = db.FindOne<Abstract>("Abstracts", doc => doc.UserName == User.Identity.GetUserName() && doc.Reviewed == true && doc.DatasetId == null);
+        if (approvedAbstract != null)
         {
-            @Html.AntiForgeryToken()
-            <h4>Tell us about your data.</h4>
-            <hr />
-            @Html.ValidationSummary("", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(m => m.Url, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(m => m.Url, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <div class="checkbox">
-                        @Html.CheckBoxFor(m => m.Rehost)
-                        @Html.LabelFor(m => m.Rehost)
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <div class="checkbox">
-                        @Html.CheckBoxFor(m => m.PublicAccess)
-                        @Html.LabelFor(m => m.PublicAccess)
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Content, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextAreaFor(m => m.Content, new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" class="btn btn-default" value="Submit" />
-                </div>
-            </div>
-
-        }*/
-
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <form name="tandc" ng-submit="approveTandC()">
-                        <div class="panel panel-default" style="margin-top:20px;">
-                            <div class="panel-body" style="max-height:600px; overflow-y:scroll; background-color:white;">
-                                <div style="text-align:center;">
-                                    <h1>Terms and Conditions</h1>
-                                    <p>
-                                        <em>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Accumsan in nisl nisi scelerisque eu. Et odio pellentesque diam volutpat commodo sed egestas egestas. Eu feugiat pretium nibh ipsum consequat nisl. Commodo viverra maecenas accumsan lacus vel. Quis eleifend quam adipiscing vitae proin sagittis. Ut morbi tincidunt augue interdum velit euismod. Nunc sed blandit libero volutpat sed. Ipsum consequat nisl vel pretium lectus. Non nisi est sit amet facilisis magna etiam. Felis donec et odio pellentesque diam volutpat. Mauris pellentesque pulvinar pellentesque habitant morbi tristique senectus et netus. Enim lobortis scelerisque fermentum dui faucibus. Cursus in hac habitasse platea dictumst quisque sagittis. Est pellentesque elit ullamcorper dignissim cras tincidunt lobortis feugiat.
-
-                                            Nunc faucibus a pellentesque sit amet porttitor eget dolor morbi. Enim lobortis scelerisque fermentum dui faucibus in ornare. Pharetra diam sit amet nisl suscipit adipiscing bibendum. Ipsum nunc aliquet bibendum enim facilisis gravida neque convallis a. Convallis aenean et tortor at. Cum sociis natoque penatibus et magnis dis parturient montes. Turpis egestas pretium aenean pharetra magna ac placerat vestibulum lectus. Ornare lectus sit amet est. Scelerisque in dictum non consectetur a erat nam. Est lorem ipsum dolor sit amet consectetur adipiscing elit. Magna eget est lorem ipsum dolor. Est ullamcorper eget nulla facilisi etiam dignissim. Dictum non consectetur a erat nam at. Sit amet tellus cras adipiscing enim eu turpis egestas. Enim diam vulputate ut pharetra sit amet aliquam. Ultrices gravida dictum fusce ut placerat orci nulla pellentesque dignissim. In ante metus dictum at tempor commodo ullamcorper a lacus. Adipiscing elit duis tristique sollicitudin nibh sit amet commodo. Dolor morbi non arcu risus quis varius quam.
-
-                                            Etiam tempor orci eu lobortis elementum nibh. Integer enim neque volutpat ac tincidunt vitae semper quis lectus. Sed faucibus turpis in eu mi bibendum neque egestas. Orci dapibus ultrices in iaculis nunc sed augue. A erat nam at lectus urna. Non curabitur gravida arcu ac tortor dignissim convallis aenean et. Suspendisse interdum consectetur libero id faucibus. Sed risus pretium quam vulputate. Est placerat in egestas erat. Viverra nam libero justo laoreet sit amet. Accumsan tortor posuere ac ut consequat semper viverra nam libero.
-
-                                            Est ultricies integer quis auctor elit. Proin fermentum leo vel orci porta non pulvinar. Nulla pellentesque dignissim enim sit amet venenatis urna cursus. Leo a diam sollicitudin tempor id eu. Aliquam ut porttitor leo a diam sollicitudin. Dignissim convallis aenean et tortor at risus viverra adipiscing. Orci nulla pellentesque dignissim enim sit. Nunc mattis enim ut tellus elementum sagittis vitae et. Turpis tincidunt id aliquet risus feugiat in ante. Volutpat lacus laoreet non curabitur. Congue eu consequat ac felis donec et odio. Faucibus vitae aliquet nec ullamcorper sit amet risus. Senectus et netus et malesuada fames ac turpis egestas. Lobortis mattis aliquam faucibus purus in. Eget dolor morbi non arcu risus. Aliquam sem et tortor consequat id porta nibh venenatis. Feugiat nibh sed pulvinar proin gravida hendrerit. Augue mauris augue neque gravida in fermentum et sollicitudin. Nulla pharetra diam sit amet nisl suscipit.
-
-                                            Placerat vestibulum lectus mauris ultrices eros in cursus. Nulla porttitor massa id neque aliquam vestibulum morbi blandit cursus. Eget egestas purus viverra accumsan in. Sit amet commodo nulla facilisi nullam vehicula ipsum a. Cursus in hac habitasse platea dictumst quisque sagittis purus. Lobortis elementum nibh tellus molestie nunc non blandit. Ipsum a arcu cursus vitae congue mauris rhoncus aenean vel. Posuere sollicitudin aliquam ultrices sagittis orci a scelerisque purus. Eget mauris pharetra et ultrices neque ornare aenean euismod. Pellentesque pulvinar pellentesque habitant morbi tristique senectus. Tellus at urna condimentum mattis pellentesque id.
-                                        </em>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        @*
-                        <div style="text-align:center;">
-                            <button style="margin:20px;" class="btn btn-primary" type="submit">Agree to Terms & Conditions</button>
-                        </div>
-                        *@
-                            <div style="text-align:center;">
-                                <input type="button" value="Agree to Terms & Conditions" onclick="location.href='@Url.Action("SubmitAbstract", "Upload")'" />
-                            </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+            /*  PETER - YOUR CSHTML CODE TO DISPLAY THE DATASET UPLOAD PAGE WILL GO HERE.
+             * To get the username/email (which is unique, no duplicates are allowed) of the user who is making the current
+             * request, you can either use User.Identity.GetUserName() (gets username of whoever made the current http request) OR
+             * you can use approvedAbstract.UserName since both will be the same.  Any other info you want to associate with the dataset,
+             * e.g., title, authors, etc. you should be able to get using approvedAbstract's properties.  Once you have the dataset 
+             * uploaded, please update the "DataSetId" (the Mongo GUID for the document associated with that dataset in the DB) property 
+             * of the approvedAbstract and call the method "UpdateInDb()" and that will save your changes to that abstract.
+            */
+        }
+        else
+        {
+            @Html.Partial("_UploadInstructions")
+            <p>
+                Before proceeding, read the following list of terms of conditions carefully:
+            </p>
+            @Html.Partial("_TermsConditions")
+        }
     }
 }
 else
 {
-    <p>
-        Please follow these instructions (not how I want to word this, but you get the idea):
-        <ol>
-            <li><em>Images must be in DICOM (version #) format</em></li>
-            <li><em>All images must be in a single ZIP folder in your local file directory</em></li>
-            <li><em>Ensure that you have an active URL at which the designated files can be accessed</em></li>
-            <li><em>etc., etc., etc.</em></li>
-        </ol>
-    </p>
+    @Html.Partial("_UploadInstructions")
     <p>
         Please @Html.ActionLink("sign in", "Login", "Account") or @Html.ActionLink("register", "Register", "Account") to begin the upload process.
     </p>
