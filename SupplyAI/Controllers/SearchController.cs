@@ -60,7 +60,8 @@ namespace MI3.Controllers
                             r.Summary.Contains(query)
                             || r.Name.Contains(query) select r).ToList();
             //|| r.root.Items.Count() >0 select r).ToList();
-
+            var results = Database.DataCollection.AsQueryable().Select(r => r.root.Items);
+            //var res2 = results.Where(n=> n)
 
 
             //IQueryable<Repository> items = from r in Database.DataCollection.AsQueryable() where r.root.Items.Where(n=> n.fileType == FileType.Dicom).Cast<RepoDicomFile>().Select(x =>x.dicomFile).Any(d => d.Dataset.Contains(parsedTag)) select r ;
