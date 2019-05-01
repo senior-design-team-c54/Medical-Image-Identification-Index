@@ -75,7 +75,7 @@
                         <div style="padding: 10px; margin-left: 20px; margin-right: 20px">
                             <h4><strong>@Html.ActionLink(notificationType.Title, "Review", "Notifications", new { notificationId = notification.Id }, null)</strong></h4>
                             <p>User: @notification.UserName</p>
-                            <p>Submission date: @notification.DateGenerated.ToLongDateString(), @notification.DateGenerated.ToLongTimeString()</p>
+                            <p>Submission date: @notification.DateGenerated.ToLongDateString(), @notification.DateGenerated.ToLocalTime().ToLongTimeString()</p>
                         </div>
                     </div>
                     <br />
@@ -86,8 +86,8 @@
                         <div style="padding: 10px; margin-left: 20px; margin-right: 20px">
                             <h4><strong>@notificationType.Title</strong></h4>
                             <p>User: @notification.UserName</p>
-                            <p>Submission date: @notification.DateGenerated.ToLongDateString(), @notification.DateGenerated.ToLongTimeString()</p>
-                            <p>Date resolved: @notification.DateResolved.ToLongDateString(), @notification.DateResolved.ToLongTimeString()</p>
+                            <p>Submission date: @notification.DateGenerated.ToLongDateString(), @notification.DateGenerated.ToLocalTime().ToLongTimeString()</p>
+                            <p>Date resolved: @notification.DateResolved.ToLongDateString(), @notification.DateResolved.ToLocalTime().ToLongTimeString()</p>
                         </div>
                     </div>
                     <br />
