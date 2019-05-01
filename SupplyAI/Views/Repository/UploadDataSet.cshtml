@@ -11,39 +11,61 @@
     }
 
 }
+<style>
+    .fullrow {
+        height: auto;
+        width: 100%;
+        display: flex;
+        border-radius: 4px;
+        overflow: hidden;
+        padding-bottom: 20px;
+
+    }
+    .stdWidth{
+        width:120px;
+    }
+</style>
 
 
 <h2>SendFile</h2>
 
 <form id="MetaForm" method="post" action='@Url.Action("ReceiveMeta", "Repository")'>
-    Name:   <input type="text" name="name" value="" /><br />
-    Authors: <input type="text" name="authors" value="" /><br />
-    Data access url: <input type="text" name="url" value="" /><br />
-    Availability:  <select name="availability">
-        <br />
-        <option value="Private">Private</option>
-        <option value="Public">Public</option>
-    </select><br />
-    Summary: <br /><textarea name="summary" rows="10" cols="70"> </textarea><br />
+    <div class="col-md-10">
+        <div class="row fullrow">
+            <div class="stdWidth"> Name:</div>   <input type="text" name="name" class="col-sm" value="" /><br />
+        </div>
+        <div class="row fullrow">
+            <div class="stdWidth">Authors:</div> <input type="text" name="authors" value="" /><br />
+        </div>
+        <div class="row fullrow">
+            <div class="stdWidth"> Data access url:</div> <input type="text" name="url" value="" /><br />
+        </div>
+        <div class="row fullrow">
+            <div class="stdWidth">Availability:</div>  <select name="availability">
+
+                <option value="Private">Private</option>
+                <option value="Public">Public</option>
+            </select><br />
+        </div><br />
+        <div class="row fullrow">
+            <div class="stdWidth">Summary:</div> <br /><textarea name="summary" rows="10" cols="70"> </textarea><br />
+        </div>
+        <div id="FileCount">
+            <div style="display:inline">Files: </div>
+            <div style="display:inline" id="processedFiles">0</div>
+            /
+            <div style="display:inline" id="totalFiles">0</div> Sent.
+        </div>
+    </div>
 </form>
 <br />
 <br />
 
-<div id="FileCount">
-    <div style="display:inline">Files: </div>
-    <div style="display:inline" id="processedFiles">0</div>
-    /
-    <div style="display:inline" id="totalFiles">0</div> Sent.
-</div>
+
 
 
 <input id="FileInput" type="file" onchange="loadF(event)" />
 
-<div class="form-group">
-    <div class="col-md-offset-2 col-md-10">
-        <input id="submit" type="submit" value="Create" class="btn btn-default" />
-    </div>
-</div>
 
 <div>
     @Html.ActionLink("Back to List", "View", new { id = 0 })
@@ -59,25 +81,15 @@
         //need to initialize repository before sending zip data
 
         var file = event.target.files[0];
-        //sendZipMeta(Object.keys(zip.files));
-        var meta = {};
-        meta.name = "Default";
-        meta.summary = "<None Found>";
-        meta.totalSize = -1;
-        meta.authors = [];
-        meta.availability = "Private";
-        meta.url = "EXAMPLE URL";
-        meta.peer_reviewed = "N";
 
+        meta = {};
         meta = $("#MetaForm").serialize();
-        console.log(meta);
-
-
-        sendMeta(meta).then(function () {
+        sendMeta(meta).then(
             readZip(file, function (zip) {
                 parseZip(zip);
-            });
-        });
+            })
+        );
+       
 
     }
     //cake the opened JSZip file and parse all files within it
@@ -131,6 +143,27 @@
 
         }
     }
+     //meta data for initialized the repository
+    function sendMeta(dataI) {
+        let actionUrl = '@Url.Action("ReceiveMeta", "Repository")';
+        let successFunc = function (outData) {
+            if (outData == 'failed') {
+                alert('Metadata was not properly configured when being sent to server. Please make sure all form fields are valid.');
+            }
+        }
+        let failFunc = function () {
+            alert('Failed to send data to Server, please refresh and try again');
+        }
+        return $.ajax({
+            url: actionUrl,
+            type:'post',
+            data:dataI,
+            success: successFunc,
+            error: failFunc
+        });
+
+    }
+
     var procCount = 0;
     var procFiles = document.getElementById("processedFiles");
     var totalFiles = document.getElementById("totalFiles");
@@ -161,25 +194,7 @@
         return postWithAjax(inData, actionUrl, successFunc, failFunc);
     }
     //meta data for initialized the repository
-    function sendMeta(dataI) {
-        let actionUrl = '@Url.Action("ReceiveMeta", "Repository")';
-        let successFunc = function (outData) {
-            if (outData == 'failed') {
-                alert('Metadata was not properly configured when being sent to server. Please make sure all form fields are valid.');
-            }
-        }
-        let failFunc = function () {
-            alert('Failed to send data to Server, please refresh and try again');
-        }
-        return $.ajax({
-            url: actionUrl,
-            type:'post',
-            data:dataI,
-            success: successFunc,
-            error: failFunc
-        });
-
-    }
+    
     //sends metadata of what is int the zip file so it can be preconstructed
     function sendZipMeta(data,fileCount) {
         let actionUrl = '@Url.Action("ReceiveZipMeta", "Repository")';

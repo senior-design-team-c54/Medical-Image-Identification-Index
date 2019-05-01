@@ -52,14 +52,17 @@ namespace MI3.Controllers
         /// </summary>
         [HttpPost]
        // [ValidateAntiForgeryToken]
-        public JsonResult ReceiveMeta(UploadMeta meta) {
+        public ActionResult ReceiveMeta(UploadMeta meta) {
             var Nvc = Request.Form;
-            // meta.files = new string[] { "aagghh", "failed" };
             //create the empty repository starting with the metaData
             HttpContext.Session["Repository"] = new Repository(meta);
+            HttpContext.Session["RepoCount"] = 0;
+            //return RedirectToAction("Index", "Search");
 
             return new JsonResult { Data = meta };
         }
+
+
 
 
         
@@ -76,8 +79,8 @@ namespace MI3.Controllers
             }
             //initialize data portion of repo using zip file meta data
             ((Repository)HttpContext.Session["Repository"]).initializeFromZipMeta(zipMeta);
-           
 
+            
             return new JsonResult { Data = "success" };
         }
         [HttpPost]

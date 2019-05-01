@@ -2,30 +2,56 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<body>
-    <form id="form1" runat="server">
+<style>
+    .fullrow {
+        height: auto;
+        width: 100%;
+        display: flex;
+        border-radius: 4px;
+        overflow: hidden;
+        padding-bottom: 20px;
+    }
 
-        <div>
-            <h3> File Upload:</h3>
-            <br />
-            <asp:FileUpload ID="FileUpload1" runat="server" />
-            <br /><br />
-            <asp:Button ID="btnsave" runat="server" onclick="btnsave_Click" Text="Save" style="width:85px" />
-            <br /><br />
-            <asp:Label ID="lblmessage" runat="server" />
+    .stdWidth {
+        width: 120px;
+    }
+</style>
+
+
+<h2>SendFile</h2>
+
+<form id="MetaForm" method="post" action='@Url.Action("ReceiveMeta", "Repository")'>
+    <div style="padding-left: 10px;" >
+        <div class="row fullrow">
+            <div class="stdWidth"> Name:</div>   <input type="text" name="name" class="col-sm" value="" /><br />
         </div>
+        <div class="row fullrow">
+            <div class="stdWidth">Authors:</div> <input type="text" name="authors" value="" /><br />
+        </div>
+        <div class="row fullrow">
+            <div class="stdWidth"> Data access url:</div> <input type="text" name="url" value="" /><br />
+        </div>
+        <div class="row fullrow">
+            <div class="stdWidth">Availability:</div>  <select name="availability">
 
-    </form>
-</body>
+                <option value="Private">Private</option>
+                <option value="Public">Public</option>
+            </select><br />
+        </div><br />
+        <div class="row fullrow">
+            <div class="stdWidth">Summary:</div> <br /><textarea name="summary" rows="10" cols="70"> </textarea><br />
+        </div>
+        <input type="submit" />
+    </div>
+</form>
+<br />
+<br />
 
-@if (Request.IsAuthenticated)
-{
+@if (Request.IsAuthenticated) {
     <p>
         <h1><em>Instructions for upload file format</em></h1>
     </p>
-}
-else
-{
+} else {
     <p>
         Please @Html.ActionLink("sign in", "Login", "Account") or @Html.ActionLink("register", "Register", "Account") to upload your data.
     </p>
