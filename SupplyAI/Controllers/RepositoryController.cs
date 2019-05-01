@@ -11,6 +11,7 @@ using System.Net.Http;
 using MI3.Models.FormData;
 using System.IO;
 using System.Globalization;
+using Microsoft.AspNet.Identity;
 
 namespace MI3.Controllers
 {
@@ -53,11 +54,11 @@ namespace MI3.Controllers
         [HttpPost]
        // [ValidateAntiForgeryToken]
         public ActionResult ReceiveMeta(UploadMeta meta) {
-            var Nvc = Request.Form;
-            //create the empty repository starting with the metaData
-            HttpContext.Session["Repository"] = new Repository(meta);
-            HttpContext.Session["RepoCount"] = 0;
-            //return RedirectToAction("Index", "Search");
+            //var Nvc = Request.Form;
+            ////create the empty repository starting with the metaData
+            //HttpContext.Session["Repository"] = new Repository(meta);
+            //HttpContext.Session["RepoCount"] = 0;
+            ////return RedirectToAction("Index", "Search");
 
             return new JsonResult { Data = meta };
         }
@@ -72,7 +73,11 @@ namespace MI3.Controllers
         /// <returns></returns>
         [HttpPost]
         public JsonResult ReceiveZipMeta(UploadZipMeta zipMeta) {
-            
+
+            var reviewedAbstract = Database.DB.FindOne<Abstract>("Abstracts", doc => doc.UserName == User.Identity.GetUserName() && doc.Reviewed == true && doc.DatasetId == null);
+
+
+            HttpContext.Session["Repository"] = new Repository(reviewedAbstract);
             //null check
             if (HttpContext.Session["Repository"] == null) {
                 return new JsonResult { Data = "failure" };
