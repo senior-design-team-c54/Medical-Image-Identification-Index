@@ -1,0 +1,70 @@
+﻿@using MongoDB.AspNet.Identity;
+@using Microsoft.AspNet.Identity;
+@model MI3.Models.ManageUsersViewModel
+@{
+    ViewBag.Title = "Manage";
+}
+
+<head>
+    <style>
+        th, td {
+            border-bottom: 1px solid #ddd;
+            padding: 15px;
+        }
+    </style>
+</head>
+
+<h2>Manage Users</h2>
+
+@{
+    List<IdentityUser> userList = (new Database()).Find<IdentityUser>("AspNetUsers", _ => true);
+}
+
+@using (Html.BeginForm("Manage", "Users", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div style="overflow-y: auto">
+        <table>
+            <tr>
+                <th>Username/Email</th>
+                <th>Role</th>
+            </tr>
+            @{
+                List<string> roles = new List<string>(new string[] { "user", "admin" });
+                List<string> displayRoles;
+                string userRole;
+            }
+            @foreach (IdentityUser user in userList)
+            {
+                displayRoles = new List<string>(roles);
+            <tr>
+                <th style="font-weight: normal;">@user.UserName</th>
+                @{
+                    userRole = user.Roles.Count == 0 ? "user" : user.Roles[0];
+                    displayRoles.Remove(userRole);
+                    if (user.UserName != User.Identity.GetUserName())
+                    {
+                        <th style="font-weight: normal;">
+                            @Html.DropDownListFor(m => m.UpdatedUserRoles[user.UserName], new SelectList(displayRoles), userRole)
+                        </th>
+                    }
+                    else
+                    {
+                        <th style="font-weight: normal;">@userRole</th>
+                    }
+                }
+            </tr>
+            }
+        </table>
+    </div>
+    <div class="form-group", style="padding-top: 20px;">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Submit" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

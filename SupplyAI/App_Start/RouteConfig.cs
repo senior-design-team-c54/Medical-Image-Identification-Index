@@ -11,7 +11,7 @@ namespace MI3
     {
         public static void RegisterRoutes(RouteCollection routes) {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-            Startup.Init(); //inializes startup variables (like the database)
+            //Startup.Init(); //inializes startup variables (like the database)
 
             routes.MapRoute(
                 name: "Default",

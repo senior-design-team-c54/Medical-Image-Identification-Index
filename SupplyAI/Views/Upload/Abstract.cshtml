@@ -1,0 +1,377 @@
+﻿@using MI3.Models
+@model MI3.Models.AbstractViewModel
+
+@{
+    ViewBag.Title = "Abstract";
+}
+
+<head>
+    <style>
+        .field {
+            border-bottom: 1px solid #eee;
+            padding: 10px;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+
+<h2>@ViewBag.Title.</h2>
+
+@using (Html.BeginForm("SubmitAbstract", "Upload", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Tell us about your data</h4>
+    <hr />
+    <div class="field">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <p>Enter a title (at least 10 characters) for your dataset:</p>
+                @Html.TextBoxFor(m => m.DatasetTitle, new { @class = "form-control" })
+                <p></p>
+                @Html.ValidationMessageFor(m => m.DatasetTitle, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <p>List dataset authors (separated by commas):</p>
+                @Html.TextBoxFor(m => m.Authors, new { @class = "form-control" })
+                <p></p>
+                @Html.ValidationMessageFor(m => m.Authors, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <p>Source of data (institutional):</p>
+                @Html.TextBoxFor(m => m.Source, new { @class = "form-control" })
+                <p></p>
+                @Html.ValidationMessageFor(m => m.Source, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <p>Describe the main clinical issue(s) of your data (ICD-10 coded value(s), if possible):</p>
+                @Html.TextAreaFor(m => m.ClinicalIssues, new { @class = "form-control" })
+                <p></p>
+                @Html.ValidationMessageFor(m => m.ClinicalIssues, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <p>Are all of your images of the same modality and device manufacturer?</p>
+                Yes
+                @Html.RadioButtonFor(m => m.SameModalityAndManuf, "true")
+                No
+                @Html.RadioButtonFor(m => m.SameModalityAndManuf, "false")
+                <p></p>
+                @Html.ValidationMessageFor(m => m.SameModalityAndManuf, "", new { @class = "text-danger" })
+            </div>
+            <div id="Modality_true" class="col-md-offset-3 col-md-10">
+                @Html.DisplayNameFor(m => m.Modality)
+                @Html.DropDownListFor(m => m.Modality, new SelectList(Abstract.Modalities), new { @id = "ModalitySelect" })
+                @Html.DisplayNameFor(m => m.Manufacturer)
+                @Html.DropDownListFor(m => m.Manufacturer, new SelectList(Abstract.Manufacturers), new { @id = "ManufacturerSelect" })
+            </div>
+            <div id="Modality_true2" class="col-md-offset-4 col-md-10" style="padding-top: 15px;">
+                <p>Describe the hardware/software models and versions used:</p>
+                @Html.TextAreaFor(m => m.ModelsAndVersions, new { @class = "form-control" })
+            </div>
+            <div id="Modality_other" class="col-md-offset-4 col-md-10" style="padding-top: 15px;">
+                <p>Specify the modality:</p>
+                @Html.TextBoxFor(m => m.Modality)
+            </div>
+            <div id="Manufacturer_other" class="col-md-offset-4 col-md-10" style="padding-top: 15px;">
+                <p>Specify the manufacturer:</p>
+                @Html.TextBoxFor(m => m.Manufacturer)
+            </div>
+            <div id="Modality_false" class="col-md-offset-3 col-md-10">
+                <p>Describe the modalities and devices (manufacturers and models) used:</p>
+                @Html.TextAreaFor(m => m.MultipleModalitiesAndManuf, new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <p>Would you like us to host your image data on our servers?</p>
+                Yes
+                @Html.RadioButtonFor(m => m.Rehost, "true")
+                No
+                @Html.RadioButtonFor(m => m.Rehost, "false")
+                <p></p>
+                @Html.ValidationMessageFor(m => m.Rehost, "", new { @class = "text-danger" })
+            </div>
+            <div id="Host_true" class="col-md-offset-3 col-md-10">
+                <p>Unfortunately, we currently do not have the ability to re-host image data.</p>
+            </div>
+            <div id="Host_false" class="col-md-offset-3 col-md-10">
+                <p>Provide an active URL at which the data can be accessed:</p>
+                @Html.TextBoxFor(m => m.Url, new { @class = "form-control" })
+                <p></p>
+                @Html.ValidationMessageFor(m => m.Url, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <p>Would you like to have your data be publicly accessible?</p>
+                Yes
+                @Html.RadioButtonFor(m => m.PublicAccess, "true")
+                No
+                @Html.RadioButtonFor(m => m.PublicAccess, "false")
+                <p></p>
+                @Html.ValidationMessageFor(m => m.PublicAccess, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <p>Do labels exist for your data?</p>
+                Yes
+                @Html.RadioButtonFor(m => m.HasLabels, "true")
+                No
+                @Html.RadioButtonFor(m => m.HasLabels, "false")
+                <p></p>
+                @Html.ValidationMessageFor(m => m.HasLabels, "", new { @class = "text-danger" })
+            </div>
+            <div id="Labels" class="col-md-offset-3 col-md-10">
+                <div>
+                    <p>Strongly or weakly labeled:</p>
+                    Strong
+                    @Html.RadioButtonFor(m => m.LabelType, "Strong", "Strong")
+                    Weak
+                    @Html.RadioButtonFor(m => m.LabelType, "Weak", "Weak")
+                    Unknown
+                    @Html.RadioButtonFor(m => m.LabelType, "Unknown", "Unknown")
+                    <p></p>
+                    @Html.ValidationMessageFor(m => m.LabelType, "", new { @class = "text-danger" })
+                </div>
+                <div style="padding-top: 15px;">
+                    <p>Are the labels peer-reviewed?</p>
+                    Yes
+                    @Html.RadioButtonFor(m => m.LabelsReviewed, "Yes", "yes")
+                    No
+                    @Html.RadioButtonFor(m => m.LabelsReviewed, "No", "no")
+                    Unknown
+                    @Html.RadioButtonFor(m => m.LabelsReviewed, "Unknown", "unknown")
+                    <p></p>
+                    @Html.ValidationMessageFor(m => m.LabelsReviewed, "", new { @class = "text-danger" })
+                </div>
+                <div style="padding-top: 15px;">
+                    <p>Do the labels exist at the series or study level?</p>
+                    Series
+                    @Html.RadioButtonFor(m => m.LabelLevel, "Series", "series")
+                    Study
+                    @Html.RadioButtonFor(m => m.LabelLevel, "Study", "study")
+                    Unknown
+                    @Html.RadioButtonFor(m => m.LabelLevel, "Unknown", "unknown")
+                </div>
+                <div style="padding-top: 15px;">
+                    <p>Describe the format in which the labels are stored:</p>
+                    @Html.TextAreaFor(m => m.LabelFormat, new { @class = "form-control" })
+                    <p></p>
+                    @Html.ValidationMessageFor(m => m.LabelFormat, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <p>Approximate number of studies in dataset:</p>
+                @Html.TextBoxFor(m => m.NumberOfStudies, new { @class = "form-control" })
+                <p></p>
+                @Html.ValidationMessageFor(m => m.NumberOfStudies, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <p>Primary country of origin:</p>
+                @Html.DropDownListFor(m => m.Country, new SelectList(Abstract.Countries), new { @id = "CountrySelect" })
+                <p></p>
+                @Html.ValidationMessageFor(m => m.Country, "", new { @class = "text-danger" })
+            </div>
+            <div id="RegionAndState" class="col-md-offset-3 col-md-10">
+                <p>Region in the US:</p>
+                @Html.DropDownListFor(m => m.USRegion, new SelectList(Abstract.USRegions), new { @id = "RegionSelect" })
+                <p style="padding-top: 15px;">US state which patient(s) is/are from:</p>
+                @Html.DropDownListFor(m => m.State, new SelectList(Abstract.States), new { @id = "StateSelect" })
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <p>Is the pixel data shifted in any way?</p>
+                Yes
+                @Html.RadioButtonFor(m => m.PixelDataShifted, "Yes", "yes")
+                No
+                @Html.RadioButtonFor(m => m.PixelDataShifted, "No", "no")
+                Unknown
+                @Html.RadioButtonFor(m => m.PixelDataShifted, "Unknown", "unknown")
+                <p></p>
+                @Html.ValidationMessageFor(m => m.PixelDataShifted, "", new { @class = "text-danger" })
+            </div>
+            <div id="PixelShift" class="col-md-offset-3 col-md-10">
+                <p>Elaborate:</p>
+                @Html.TextAreaFor(m => m.HowPixelDataShifted, new { @class = "form-control" })
+                <p></p>
+                @Html.ValidationMessageFor(m => m.HowPixelDataShifted, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <p>Has any of the pixel data been synthesized?</p>
+                Yes
+                @Html.RadioButtonFor(m => m.PixelDataSynthesized, "Yes", "yes")
+                No
+                @Html.RadioButtonFor(m => m.PixelDataSynthesized, "No", "no")
+                Unknown
+                @Html.RadioButtonFor(m => m.PixelDataSynthesized, "Unknown", "unknown")
+                <p></p>
+                @Html.ValidationMessageFor(m => m.PixelDataSynthesized, "", new { @class = "text-danger" })
+            </div>
+            <div id="PixelSynth" class="col-md-offset-3 col-md-10">
+                <p>Elaborate:</p>
+                @Html.TextAreaFor(m => m.HowPixelDataSynthesized, new { @class = "form-control" })
+                <p></p>
+                @Html.ValidationMessageFor(m => m.HowPixelDataSynthesized, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(m => m.IsAnonymized)
+                    I certify that all data has been properly and completely scrubbed of any and all Protected Health Information (PHI).
+                    @Html.ValidationMessageFor(m => m.IsAnonymized, "", new { @class = "text-danger" })
+                </div>
+                <div style="padding-top: 15px;">
+                    <p>Describe how your data has been de-identified:</p>
+                    @Html.TextAreaFor(m => m.HowAnonymized, new { @class = "form-control" })
+                    <p></p>
+                    @Html.ValidationMessageFor(m => m.HowAnonymized, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <p>Please share any additional relevant information about your data:</p>
+                @Html.TextAreaFor(m => m.Content, new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10" style="padding-top: 20px;">
+            <input type="submit" class="btn btn-default" value="Submit" />
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $("#Modality_true").hide();
+        $("#Modality_true2").hide();
+        $("#Modality_false").hide();
+        $("#Modality_other").hide();
+        $("#Manufacturer_other").hide();
+        $("#Host_true").hide();
+        $("#Host_false").hide();
+        $("#Labels").hide();
+        $("#RegionAndState").hide();
+        $("#PixelShift").hide();
+        $("#PixelSynth").hide();
+        $("input[name='SameModalityAndManuf']").on("change", function () {
+            if ($(this).val() == "false") {
+                $("#Modality_true").hide();
+                $("#Modality_true2").hide();
+                $("#Modality_false").show();
+                $("#Modality_other").hide();
+                $("#Manufacturer_other").hide();
+            }
+            else {
+                $("#Modality_true").show();
+                $("#Modality_true2").show();
+                $("#Modality_false").hide();
+            }
+        });
+        $("#ModalitySelect").on("change", function () {
+            if ($(this).val() == "Other") {
+                $("#Modality_other").show();
+            }
+            else {
+                $("#Modality_other").hide();
+            }
+        });
+        $("#ManufacturerSelect").on("change", function () {
+            if ($(this).val() == "Other") {
+                $("#Manufacturer_other").show();
+            }
+            else {
+                $("#Manufacturer_other").hide();
+            }
+        });
+        $("input[name='Rehost']").on("change", function () {
+            if ($(this).val() == "false") {
+                $("#Host_true").hide();
+                $("#Host_false").show();
+            }
+            else {
+                $("#Host_true").show();
+                $("#Host_false").show();
+            }
+        });
+        $("input[name='HasLabels']").on("change", function () {
+            if ($(this).val() == "true") {
+                $("#Labels").show();
+            }
+            else {
+                $("#Labels").hide();
+            }
+        });
+        $("#CountrySelect").on("change", function () {
+            if ($(this).val() == "United States") {
+                $("#RegionAndState").show();
+            }
+            else {
+                $("#RegionAndState").hide();
+            }
+        });
+        $("input[name='PixelDataShifted']").on("change", function () {
+            if ($(this).val() == "Yes") {
+                $("#PixelShift").show();
+            }
+            else {
+                $("#PixelShift").hide();
+            }
+        });
+        $("input[name='PixelDataSynthesized']").on("change", function () {
+            if ($(this).val() == "Yes") {
+                $("#PixelSynth").show();
+            }
+            else {
+                $("#PixelSynth").hide();
+            }
+        });
+    </script>
+}
+

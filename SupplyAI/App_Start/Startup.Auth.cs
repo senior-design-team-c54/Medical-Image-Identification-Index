@@ -79,6 +79,7 @@ namespace MI3
        // public static readonly RepositoryDictionary Database = new RepositoryDictionary();
         public static readonly TagDictionary Tags = new TagDictionary();
 
+        /*
         public static void Init() {
             Database = new Database();
             initTags(); //must be first
@@ -116,7 +117,7 @@ namespace MI3
 
 
         }
-
+        */
 
 
         //private static void initDatabase(){
@@ -164,7 +165,7 @@ namespace MI3
 
         //}
 
-
+        /*
         private static void initTags() {
             at("organ");
             at("organ:bones");
@@ -196,6 +197,6 @@ namespace MI3
             }
 
             Tags.Add(new MI3.Models.Tag(name,parent));
-        }
+        }*/
      }
 }

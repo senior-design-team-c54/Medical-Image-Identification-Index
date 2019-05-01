@@ -1,0 +1,80 @@
+﻿@using MongoDB.Driver;
+@using MongoDB.Bson;
+@using MI3.Models;
+@using Microsoft.AspNet.Identity;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>
+    <h2>Upload.</h2>
+    <h4>Submit a DICOM image dataset</h4>
+    <hr />
+</p>
+
+@*
+    <body>
+        <form id="form1" runat="server">
+
+            <div>
+                <h3> File Upload:</h3>
+                <br />
+                <asp:FileUpload ID="FileUpload1" runat="server" />
+                <br /><br />
+                <asp:Button ID="btnsave" runat="server" onclick="btnsave_Click" Text="Save" style="width:85px" />
+                <br /><br />
+                <asp:Label ID="lblmessage" runat="server" />
+            </div>
+
+        </form>
+    </body>
+*@
+
+@if (Request.IsAuthenticated)
+{
+    Database db = new Database();
+    var reviewedAbstract = db.FindOne<Abstract>("Abstracts", doc => doc.UserName == User.Identity.GetUserName() && doc.Reviewed == false);
+    if (reviewedAbstract != null)
+    {
+        <p>
+            Your current submission request is still pending review.  We will notify you when we have finished processing your abstract.
+        </p>
+    }
+    else
+    {
+        var approvedAbstract = db.FindOne<Abstract>("Abstracts", doc => doc.UserName == User.Identity.GetUserName() && doc.Reviewed == true && doc.DatasetId == null);
+        if (approvedAbstract != null)
+        {
+            /*  PETER - YOUR CSHTML CODE TO DISPLAY THE DATASET UPLOAD PAGE WILL GO HERE.
+             * To get the username/email (which is unique, no duplicates are allowed) of the user who is making the current
+             * request, you can either use User.Identity.GetUserName() (gets username of whoever made the current http request) OR
+             * you can use approvedAbstract.UserName since both will be the same.  Any other info you want to associate with the dataset,
+             * e.g., title, authors, etc. you should be able to get using approvedAbstract's properties.  Once you have the dataset 
+             * uploaded, please update the "DatasetId" (the Mongo GUID for the document associated with that dataset in the DB) property 
+             * of the approvedAbstract and call the method "UpdateInDb()" on approvedAbstract and that will save your changes for that abstract.
+            */
+        }
+        else
+        {
+            @Html.Partial("_UploadInstructions")
+            <p>
+                Before proceeding, read the following list of terms of conditions carefully:
+            </p>
+            @Html.Partial("_TermsConditions")
+        }
+    }
+}
+else
+{
+    @Html.Partial("_UploadInstructions")
+    <p>
+        Please @Html.ActionLink("sign in", "Login", "Account") or @Html.ActionLink("register", "Register", "Account") to begin the upload process.
+    </p>
+}
+
+
+
+
+
+
