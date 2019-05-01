@@ -406,6 +406,7 @@
     <Content Include="Views\Notifications\Review.cshtml" />
     <Content Include="Views\Upload\_TermsConditions.cshtml" />
     <Content Include="Views\Upload\_UploadInstructions.cshtml" />
+    <Content Include="Views\Repository\UploadDataSet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
