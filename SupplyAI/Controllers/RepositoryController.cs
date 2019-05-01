@@ -22,7 +22,7 @@ namespace MI3.Controllers
         [Route("View/{id}")]
         public ActionResult View(string id)
         {
-            var collection = Startup.Database.DataCollection;
+            var collection = Database.DB.DataCollection;
             var doc = collection.Find(x => x.ID == id).FirstOrDefault();
             if(doc == default(Repository)) {
                 return RedirectToAction("Index", "Search");
@@ -52,14 +52,17 @@ namespace MI3.Controllers
         /// </summary>
         [HttpPost]
        // [ValidateAntiForgeryToken]
-        public JsonResult ReceiveMeta(UploadMeta meta) {
+        public ActionResult ReceiveMeta(UploadMeta meta) {
             var Nvc = Request.Form;
-            // meta.files = new string[] { "aagghh", "failed" };
             //create the empty repository starting with the metaData
             HttpContext.Session["Repository"] = new Repository(meta);
+            HttpContext.Session["RepoCount"] = 0;
+            //return RedirectToAction("Index", "Search");
 
             return new JsonResult { Data = meta };
         }
+
+
 
 
         
@@ -76,8 +79,8 @@ namespace MI3.Controllers
             }
             //initialize data portion of repo using zip file meta data
             ((Repository)HttpContext.Session["Repository"]).initializeFromZipMeta(zipMeta);
-           
 
+            
             return new JsonResult { Data = "success" };
         }
         [HttpPost]
@@ -100,7 +103,7 @@ namespace MI3.Controllers
             //if last file
             if(count == ((Repository)HttpContext.Session["Repository"]).TotalFiles) {
                 //store repository now that ti is finished being initialized, hten erase it from session context (to save memory)
-                Startup.Database.AddRepository(((Repository)HttpContext.Session["Repository"]));
+                Database.DB.AddRepository(((Repository)HttpContext.Session["Repository"]));
                 HttpContext.Session["Repository"] = null;
                 //go back to search to show it completed
                 HttpContext.Session["RepoCount"] = 0;

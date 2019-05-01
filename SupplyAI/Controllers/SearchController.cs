@@ -17,7 +17,7 @@ namespace MI3.Controllers
         //Where database refrerences would be stored.
         //Since we aren't connecting to a database, we create our own termoprary one to make things look cool
         //Where we will initialize our database stuff
-        private Database Database => Startup.Database; //alias the name for convenience
+        private Database Database => Database.DB; //alias the name for convenience
 
         public List<Repository> SearchResults;
         public int hi = 0;
@@ -60,7 +60,8 @@ namespace MI3.Controllers
                             r.Summary.Contains(query)
                             || r.Name.Contains(query) select r).ToList();
             //|| r.root.Items.Count() >0 select r).ToList();
-
+            var results = Database.DataCollection.AsQueryable().Select(r => r.root.Items);
+            //var res2 = results.Where(n=> n)
 
 
             //IQueryable<Repository> items = from r in Database.DataCollection.AsQueryable() where r.root.Items.Where(n=> n.fileType == FileType.Dicom).Cast<RepoDicomFile>().Select(x =>x.dicomFile).Any(d => d.Dataset.Contains(parsedTag)) select r ;

@@ -31,32 +31,33 @@
     </body>
 *@
 
-@if (Request.IsAuthenticated)
-{
+@if (Request.IsAuthenticated) {
     Database db = new Database();
     var reviewedAbstract = db.FindOne<Abstract>("Abstracts", doc => doc.UserName == User.Identity.GetUserName() && doc.Reviewed == false);
-    if (reviewedAbstract != null)
-    {
+    if (reviewedAbstract != null) {
         <p>
             Your current submission request is still pending review.  We will notify you when we have finished processing your abstract.
         </p>
-    }
-    else
-    {
+    } else {
         var approvedAbstract = db.FindOne<Abstract>("Abstracts", doc => doc.UserName == User.Identity.GetUserName() && doc.Reviewed == true && doc.DatasetId == null);
-        if (approvedAbstract != null)
-        {
+        if (approvedAbstract != null) {
+
+            @Html.Partial("_NavBar")
+
+            @Html.Partial("_UploadData")
+
             /*  PETER - YOUR CSHTML CODE TO DISPLAY THE DATASET UPLOAD PAGE WILL GO HERE.
              * To get the username/email (which is unique, no duplicates are allowed) of the user who is making the current
              * request, you can either use User.Identity.GetUserName() (gets username of whoever made the current http request) OR
              * you can use approvedAbstract.UserName since both will be the same.  Any other info you want to associate with the dataset,
-             * e.g., title, authors, etc. you should be able to get using approvedAbstract's properties.  Once you have the dataset 
-             * uploaded, please update the "DatasetId" (the Mongo GUID for the document associated with that dataset in the DB) property 
+             * e.g., title, authors, etc. you should be able to get using approvedAbstract's properties.  Once you have the dataset
+             * uploaded, please update the "DatasetId" (the Mongo GUID for the document associated with that dataset in the DB) property
              * of the approvedAbstract and call the method "UpdateInDb()" on approvedAbstract and that will save your changes for that abstract.
             */
-        }
-        else
-        {
+
+
+
+        } else {
             @Html.Partial("_UploadInstructions")
             <p>
                 Before proceeding, read the following list of terms of conditions carefully:
@@ -64,9 +65,7 @@
             @Html.Partial("_TermsConditions")
         }
     }
-}
-else
-{
+} else {
     @Html.Partial("_UploadInstructions")
     <p>
         Please @Html.ActionLink("sign in", "Login", "Account") or @Html.ActionLink("register", "Register", "Account") to begin the upload process.
