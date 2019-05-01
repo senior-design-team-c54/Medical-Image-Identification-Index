@@ -19,7 +19,7 @@ namespace MI3.Controllers
         //Where we will initialize our database stuff
         private Database Database => Database.DB; //alias the name for convenience
 
-        public List<Repository> SearchResults;
+        public List<Repository> SearchResults = new List<Repository>();
         public int hi = 0;
 
         // GET: Search/Index or Search
@@ -55,29 +55,30 @@ namespace MI3.Controllers
 
 
             // r.DicomFiles.Any(d => d.Dataset.Contains(parsedTag)); //look for tag (false if tag == null)
-            Database.FindRepo(filter);
-            SearchResults = (from r in Database.DataCollection.AsQueryable() where
-                            r.Summary.Contains(query)
-                            || r.Name.Contains(query) select r).ToList();
-            //|| r.root.Items.Count() >0 select r).ToList();
-            var results = Database.DataCollection.AsQueryable().Select(r => r.root.Items);
+            SearchResults = Database.FindRepo(filter);
+            ViewBag.Title = SearchResults.Count + " Search Results";
+            return View(SearchResults);
+            //SearchResults = (from r in Database.DataCollection.AsQueryable() where
+            //                r.Summary.Contains(query)
+            //                || r.Name.Contains(query) select r).ToList();
+            ////|| r.root.Items.Count() >0 select r).ToList();
+            //var results = Database.DataCollection.AsQueryable().Select(r => r.root.Items);
             //var res2 = results.Where(n=> n)
 
 
             //IQueryable<Repository> items = from r in Database.DataCollection.AsQueryable() where r.root.Items.Where(n=> n.fileType == FileType.Dicom).Cast<RepoDicomFile>().Select(x =>x.dicomFile).Any(d => d.Dataset.Contains(parsedTag)) select r ;
             // Database.FindRepo();
-           // var items = Database.DataCollection.AsQueryable().Where(r=> r.root.Items.ConvertAll(x=>(RepoDicomFile)x).Contains(null));
-           // FilterDefinition<Repository> qf = "{\"$match\":{\"root.Items\":null}}";
+            // var items = Database.DataCollection.AsQueryable().Where(r=> r.root.Items.ConvertAll(x=>(RepoDicomFile)x).Contains(null));
+            // FilterDefinition<Repository> qf = "{\"$match\":{\"root.Items\":null}}";
 
-           //// var items = Database.DataCollection.Find(qf);
-           // //var items = Database.DataCollection.AsQueryable();
-           // //DataCollection.Find(filter)
-           // //use filter to search
-           // foreach (var v in items)
-           //     Console.WriteLine(v);
+            //// var items = Database.DataCollection.Find(qf);
+            // //var items = Database.DataCollection.AsQueryable();
+            // //DataCollection.Find(filter)
+            // //use filter to search
+            // foreach (var v in items)
+            //     Console.WriteLine(v);
 
-            ViewBag.Title = SearchResults.Count + " Search Results";
-            return View(SearchResults);
+
         }
        
 

@@ -74,23 +74,14 @@
                 <div class="row">
                     @{
                         string name = data.Name;
-                        if (name == null) {
+                        if (name == null || name == "") {
                             name = "NO NAME FOUND";
                         }
                     @Html.ActionLink(name, "View", "Repository", new { id = data.ID }, new { @class = "title" })
                         }
                 </div>
                 <div class="row">
-                    Authors:
-                    @{
-
-                        int last = data.Authors.Count;
-                        string extra = ", ";
-                        for (int i = 0; i < data.Authors.Count; i++) {
-                            if (i == data.Authors.Count - 1) { extra = ""; }
-                            <span style="color:#125a8f">@Html.ActionLink(@data.Authors[i], "Author", "Search", new { name = data.Authors[i] }, new { })</span><text>@extra</text>
-                        }
-                    }
+                    Authors: @data.Authors
                 </div>
                 <div class="row">
                     @data.Summary
