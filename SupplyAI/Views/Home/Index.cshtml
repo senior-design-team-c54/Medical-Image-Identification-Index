@@ -2,30 +2,43 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>Welcome to the Medical Image Identification Index</h1>
-    <p class="lead">Teri, please give me an A.</p>
+<div class="jumbotron" style="margin-top: 16px;">
+    <h1>Welcome to the Medical Image Identification Index (MI3)</h1>
+    <p class="lead">Teri, please give us an A.</p>
     @*<p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>*@
 </div>
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Getting started</h2>
+        <h3>Find the data you need.</h3>
         <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
+            Data accessibility is currently one of the main barriers preventing artificial intelligence
+            and machine learning from revolutionizing healthcare.  The goal of MI3 is to alleviate this 
+            by acting as a globally accessible resource for the acquisition of medical images.  Our
+            application allows you to query for data based on a variety of relevant fields.  Try
+            it out here:
         </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        <p><a class="btn btn-default" href=@Url.Action("Index", "Search")>Search &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        <h3>Contribute your data.</h3>
+        <p>
+            Submitting DICOM datasets only requires that you have a registered acccount.  This
+            helps us ensure that you maintain control over who can access your data.  Then, all you 
+            have to do is answer a few questions about your data.  Once our admin have reviewed your
+            request, you'll be cleared to upload your data, and it will instantly queryable via the
+            Search page.  Learn more about uploading data to MI3:
+        </p>
+        <p><a class="btn btn-default" href=@Url.Action("Index", "Upload")>Upload &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        <h3>Making healthcare smarter.</h3>
+        <p>
+            This project was sponsored by the American College of Radiology (ACR) in an effort to accelerate
+            the development of healthcare-focused AI algorithms by providing developers with a means
+            to access the training, test, and validation data they need.  Find out more about the ACR and
+            what they do here:
+        </p>
+        <p><a class="btn btn-default" href="https://www.acrdsi.org/">Learn more &raquo;</a></p>
     </div>
 </div>

@@ -14,10 +14,13 @@
     </style>
 </head>
 
-<h2>Manage Users</h2>
+<h2>Manage Users.</h2>
+<hr />
 
 @{
     List<IdentityUser> userList = (new Database()).Find<IdentityUser>("AspNetUsers", _ => true);
+    userList.Sort((x, y) => x.UserName.CompareTo(y.UserName));
+    userList.Sort((x, y) => (y.Roles.Contains("admin")).CompareTo(x.Roles.Contains("admin")));
 }
 
 @using (Html.BeginForm("Manage", "Users", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -59,7 +62,7 @@
     </div>
     <div class="form-group", style="padding-top: 20px;">
         <div class="col-md-offset-1 col-md-10">
-            <input type="submit" class="btn btn-default" value="Submit" />
+            <input type="submit" class="btn btn-default" value="Update" />
         </div>
     </div>
 }

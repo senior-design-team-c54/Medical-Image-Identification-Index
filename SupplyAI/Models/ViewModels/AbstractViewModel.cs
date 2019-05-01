@@ -95,6 +95,7 @@ namespace MI3.Models
         [Required(ErrorMessage = "This field is required.")]
         [MinLength(2, ErrorMessage = "Institution name must be at least 2 characters long.")]
         public string Source { get; set; }
+
         public string Summary { get; set; }
     }
 }

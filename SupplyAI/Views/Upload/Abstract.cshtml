@@ -12,19 +12,29 @@
             padding: 10px;
             padding-top: 20px;
         }
+
+        .req {
+            color: red;
+            display: inline-block;
+        }
     </style>
 </head>
 
 <h2>@ViewBag.Title.</h2>
 
-@using (Html.BeginForm("SubmitAbstract", "Upload", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
+@using (Html.BeginForm("SubmitAbstract", "Upload", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
     @Html.AntiForgeryToken()
     <h4>Tell us about your data</h4>
     <hr />
+    <div class="col-md-offset-0 col-md-10">
+        Fields marked with an asterisk (<div class="req">*</div>) are required.
+    </div>
+    <br />
     <div class="field">
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <p>Enter a title (at least 10 characters) for your dataset:</p>
+                <p><div class="req">*</div>Enter a title (at least 10 characters) for your dataset:</p>
                 @Html.TextBoxFor(m => m.DatasetTitle, new { @class = "form-control" })
                 <p></p>
                 @Html.ValidationMessageFor(m => m.DatasetTitle, "", new { @class = "text-danger" })
@@ -34,7 +44,7 @@
     <div class="field">
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <p>List dataset authors (separated by commas):</p>
+                <p><div class="req">*</div>List dataset authors (separated by commas):</p>
                 @Html.TextBoxFor(m => m.Authors, new { @class = "form-control" })
                 <p></p>
                 @Html.ValidationMessageFor(m => m.Authors, "", new { @class = "text-danger" })
@@ -44,7 +54,7 @@
     <div class="field">
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <p>Source of data (institutional):</p>
+                <p><div class="req">*</div>Source of data (institutional):</p>
                 @Html.TextBoxFor(m => m.Source, new { @class = "form-control" })
                 <p></p>
                 @Html.ValidationMessageFor(m => m.Source, "", new { @class = "text-danger" })
@@ -54,7 +64,7 @@
     <div class="field">
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <p>Describe the main clinical issue(s) of your data (ICD-10 coded value(s), if possible):</p>
+                <p><div class="req">*</div>Describe the main clinical issue(s) of your data (ICD-10 coded value(s), if possible):</p>
                 @Html.TextAreaFor(m => m.ClinicalIssues, new { @class = "form-control" })
                 <p></p>
                 @Html.ValidationMessageFor(m => m.ClinicalIssues, "", new { @class = "text-danger" })
@@ -65,7 +75,7 @@
     <div class="field">
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <p>Are all of your images of the same modality and device manufacturer?</p>
+                <p><div class="req">*</div>Are all of your images of the same modality and device manufacturer?</p>
                 Yes
                 @Html.RadioButtonFor(m => m.SameModalityAndManuf, "true")
                 No
@@ -100,7 +110,7 @@
     <div class="field">
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <p>Would you like us to host your image data on our servers?</p>
+                <p><div class="req">*</div>Would you like us to host your image data on our servers?</p>
                 Yes
                 @Html.RadioButtonFor(m => m.Rehost, "true")
                 No
@@ -122,7 +132,7 @@
     <div class="field">
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <p>Would you like to have your data be publicly accessible?</p>
+                <p><div class="req">*</div>Would you like to have your data be publicly accessible?</p>
                 Yes
                 @Html.RadioButtonFor(m => m.PublicAccess, "true")
                 No
@@ -135,7 +145,7 @@
     <div class="field">
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <p>Do labels exist for your data?</p>
+                <p><div class="req">*</div>Do labels exist for your data?</p>
                 Yes
                 @Html.RadioButtonFor(m => m.HasLabels, "true")
                 No
@@ -187,7 +197,7 @@
     <div class="field">
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <p>Approximate number of studies in dataset:</p>
+                <p><div class="req">*</div>Approximate number of studies in dataset:</p>
                 @Html.TextBoxFor(m => m.NumberOfStudies, new { @class = "form-control" })
                 <p></p>
                 @Html.ValidationMessageFor(m => m.NumberOfStudies, "", new { @class = "text-danger" })
@@ -213,7 +223,7 @@
     <div class="field">
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <p>Is the pixel data shifted in any way?</p>
+                <p><div class="req">*</div>Is the pixel data shifted in any way?</p>
                 Yes
                 @Html.RadioButtonFor(m => m.PixelDataShifted, "Yes", "yes")
                 No
@@ -234,7 +244,7 @@
     <div class="field">
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <p>Has any of the pixel data been synthesized?</p>
+                <p><div class="req">*</div>Has any of the pixel data been synthesized?</p>
                 Yes
                 @Html.RadioButtonFor(m => m.PixelDataSynthesized, "Yes", "yes")
                 No
@@ -257,11 +267,11 @@
             <div class="col-md-offset-2 col-md-10">
                 <div class="checkbox">
                     @Html.CheckBoxFor(m => m.IsAnonymized)
-                    I certify that all data has been properly and completely scrubbed of any and all Protected Health Information (PHI).
+                    <div class="req">*</div>I certify that all data has been properly and completely scrubbed of any and all Protected Health Information (PHI).
                     @Html.ValidationMessageFor(m => m.IsAnonymized, "", new { @class = "text-danger" })
                 </div>
                 <div style="padding-top: 15px;">
-                    <p>Describe how your data has been de-identified:</p>
+                    <p><div class="req">*</div>Describe how your data has been de-identified:</p>
                     @Html.TextAreaFor(m => m.HowAnonymized, new { @class = "form-control" })
                     <p></p>
                     @Html.ValidationMessageFor(m => m.HowAnonymized, "", new { @class = "text-danger" })

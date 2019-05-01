@@ -10,6 +10,10 @@
 
 <head>
     <style>
+        .notif_title {
+            text-decoration: none;
+        }
+
         .notif-div-new {
             padding-top: 15px;
             padding-bottom: 20px;
@@ -73,7 +77,7 @@
                 {
                     <div class="notif-div-new">
                         <div style="padding: 10px; margin-left: 20px; margin-right: 20px">
-                            <h4><strong>@Html.ActionLink(notificationType.Title, "Review", "Notifications", new { notificationId = notification.Id }, null)</strong></h4>
+                            <h4><strong>@Html.ActionLink(notificationType.Title, "Review", "Notifications", new { notificationId = notification.Id }, new { @class = "notif-title" })</strong></h4>
                             <p>User: @notification.UserName</p>
                             <p>Submission date: @notification.DateGenerated.ToLongDateString(), @notification.DateGenerated.ToLocalTime().ToLongTimeString()</p>
                         </div>
