@@ -15,43 +15,16 @@
 </style>
 
 
-<h2>SendFile</h2>
-
-<form id="MetaForm" method="post" action='@Url.Action("ReceiveMeta", "Repository")'>
-    <div class="col-md-10">
-        <div class="row fullrow">
-            <div class="stdWidth"> Name:</div>   <input type="text" name="name" class="col-sm" value="" /><br />
-        </div>
-        <div class="row fullrow">
-            <div class="stdWidth">Authors:</div> <input type="text" name="authors" value="" /><br />
-        </div>
-        <div class="row fullrow">
-            <div class="stdWidth"> Data access url:</div> <input type="text" name="url" value="" /><br />
-        </div>
-        <div class="row fullrow">
-            <div class="stdWidth">Availability:</div>  <select name="availability">
-
-                <option value="Private">Private</option>
-                <option value="Public">Public</option>
-            </select><br />
-        </div><br />
-        <div class="row fullrow">
-            <div class="stdWidth">Summary:</div> <br /><textarea name="summary" rows="10" cols="70"> </textarea><br />
-        </div>
-        <div id="FileCount">
-            <div style="display:inline">Files: </div>
-            <div style="display:inline" id="processedFiles">0</div>
-            /
-            <div style="display:inline" id="totalFiles">0</div> Sent.
-        </div>
-    </div>
-</form>
-<br />
-<br />
 
 
 
 
+<div id="FileCount">
+    <div style="display:inline">Files: </div>
+    <div style="display:inline" id="processedFiles">0</div>
+    /
+    <div style="display:inline" id="totalFiles">0</div> Sent.
+</div>
 <input id="FileInput" type="file" onchange="loadF(event)" />
 
 
@@ -135,9 +108,9 @@
     function sendMeta(dataI) {
         let actionUrl = '@Url.Action("ReceiveMeta", "Repository")';
         let successFunc = function (outData) {
-           // if (outData == 'failed') {
+            if (outData == 'failed') {
                 alert('Metadata was not properly configured when being sent to server. Please make sure all form fields are valid.');
-           // }
+            }
         }
         let failFunc = function () {
             alert('Failed to send data to Server, please refresh and try again');

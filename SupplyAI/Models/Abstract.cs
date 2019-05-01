@@ -75,6 +75,8 @@ namespace MI3.Models
         [BsonElement]
         public string Content { get; set; }
         [BsonElement]
+        public string Summary { get; set; }
+        [BsonElement]
         public bool Approved { get; set; }
         [BsonElement]
         public string Rationale { get; set; }
@@ -137,6 +139,7 @@ namespace MI3.Models
             DatasetTitle = model.DatasetTitle;
             Authors = model.Authors;
             Source = model.Source;
+            Summary = model.Summary;
             Url = model.Url;
             Rehost = model.Rehost;
             PublicAccess = model.PublicAccess;

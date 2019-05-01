@@ -17,8 +17,7 @@
 
 <h2>@ViewBag.Title.</h2>
 
-@using (Html.BeginForm("SubmitAbstract", "Upload", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
+@using (Html.BeginForm("SubmitAbstract", "Upload", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
     @Html.AntiForgeryToken()
     <h4>Tell us about your data</h4>
     <hr />
@@ -62,6 +61,7 @@
             </div>
         </div>
     </div>
+
     <div class="field">
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -266,6 +266,14 @@
                     <p></p>
                     @Html.ValidationMessageFor(m => m.HowAnonymized, "", new { @class = "text-danger" })
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <p>Please provide a summary of the data you intend to upload:</p>
+                @Html.TextAreaFor(m => m.Summary, new { @class = "form-control" })
             </div>
         </div>
     </div>
