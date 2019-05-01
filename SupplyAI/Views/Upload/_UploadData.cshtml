@@ -108,9 +108,9 @@
     function sendMeta(dataI) {
         let actionUrl = '@Url.Action("ReceiveMeta", "Repository")';
         let successFunc = function (outData) {
-           // if (outData == 'failed') {
+            if (outData == 'failed') {
                 alert('Metadata was not properly configured when being sent to server. Please make sure all form fields are valid.');
-           // }
+            }
         }
         let failFunc = function () {
             alert('Failed to send data to Server, please refresh and try again');

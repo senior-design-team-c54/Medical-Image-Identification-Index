@@ -54,10 +54,12 @@ namespace MI3.Models
            // root = new RepoFolder("");
             MetaData = data;
             Name = data.DatasetTitle;
-            Summary = data.Content;
+            Summary = data.Summary;
             Authors = data.Authors;
             Url = data.Url;
-            
+            ID = ObjectId.GenerateNewId().ToString();
+            data.DatasetId = ID;
+            data.UpdateInDb();
 
         }
 
