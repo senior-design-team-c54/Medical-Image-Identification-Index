@@ -1,0 +1,230 @@
+﻿
+<style>
+    .fullrow {
+        height: auto;
+        width: 100%;
+        display: flex;
+        border-radius: 4px;
+        overflow: hidden;
+        padding-bottom: 20px;
+
+    }
+    .stdWidth{
+        width:120px;
+    }
+</style>
+
+
+<h2>SendFile</h2>
+
+<form id="MetaForm" method="post" action='@Url.Action("ReceiveMeta", "Repository")'>
+    <div class="col-md-10">
+        <div class="row fullrow">
+            <div class="stdWidth"> Name:</div>   <input type="text" name="name" class="col-sm" value="" /><br />
+        </div>
+        <div class="row fullrow">
+            <div class="stdWidth">Authors:</div> <input type="text" name="authors" value="" /><br />
+        </div>
+        <div class="row fullrow">
+            <div class="stdWidth"> Data access url:</div> <input type="text" name="url" value="" /><br />
+        </div>
+        <div class="row fullrow">
+            <div class="stdWidth">Availability:</div>  <select name="availability">
+
+                <option value="Private">Private</option>
+                <option value="Public">Public</option>
+            </select><br />
+        </div><br />
+        <div class="row fullrow">
+            <div class="stdWidth">Summary:</div> <br /><textarea name="summary" rows="10" cols="70"> </textarea><br />
+        </div>
+        <div id="FileCount">
+            <div style="display:inline">Files: </div>
+            <div style="display:inline" id="processedFiles">0</div>
+            /
+            <div style="display:inline" id="totalFiles">0</div> Sent.
+        </div>
+    </div>
+</form>
+<br />
+<br />
+
+
+
+
+<input id="FileInput" type="file" onchange="loadF(event)" />
+
+
+<div>
+    @Html.ActionLink("Back to List", "View", new { id = 0 })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script type="text/javascript" src="../External/DicomCut.js"></script>
+<script type="text/javascript" src="../External/jszip.min.js"></script>
+<script>
+    function loadF(event) {
+        //need to initialize repository before sending zip data
+
+        var file = event.target.files[0];
+
+        meta = {};
+        meta = $("#MetaForm").serialize();
+        sendMeta(meta).then(
+            readZip(file, function (zip) {
+                parseZip(zip);
+            })
+        );
+       
+
+    }
+    //cake the opened JSZip file and parse all files within it
+    function parseZip(zip) {
+        //use zip data to construct metaData
+
+        totalFiles.innerText = Object.keys(zip.files).length;
+
+        procCount = 0;
+        var totalCount = 0;
+        for (f in zip.files) {
+            var file = zip.files[f];
+            if (!file.name.endsWith('/'))
+                totalCount++;
+        }
+        totalFiles.innerText = totalCount;
+        sendZipMeta(Object.keys(zip.files), totalCount);
+
+
+        for (f in zip.files) {
+            var file = zip.files[f];
+            //find extension
+
+            if (file.name.endsWith('/')) {
+                //is folder
+                continue;
+            }
+
+            //uses regex expression to find extension, or "" if nothing
+            var ext = /^.+\.([^.]+)$/.exec(file.name);
+
+            if (ext == null || ext[1].toLowerCase() == "dcm") {
+
+                var name = file.name;
+                //should be a dicom file due to extension. Dont mess it up
+                file.internalStream("uint8array")
+                    .accumulate((metadata) => { }) //metadata contains 'percent' and 'currentFile'
+                    .then((data) => {
+                        //parsedData contains DICOM header w/o image
+                        var parsedData = cutOutImgTag(data);
+                        var str = "";
+                        for (var i = 0; i < parsedData.length; i++)
+                            str += String.fromCharCode(parseInt(parsedData[i]));
+                        //console.log(str);
+                        sendZipFile(str, name);
+
+                    });
+
+            }
+
+
+        }
+    }
+     //meta data for initialized the repository
+    function sendMeta(dataI) {
+        let actionUrl = '@Url.Action("ReceiveMeta", "Repository")';
+        let successFunc = function (outData) {
+           // if (outData == 'failed') {
+                alert('Metadata was not properly configured when being sent to server. Please make sure all form fields are valid.');
+           // }
+        }
+        let failFunc = function () {
+            alert('Failed to send data to Server, please refresh and try again');
+        }
+        return $.ajax({
+            url: actionUrl,
+            type:'post',
+            data:dataI,
+            success: successFunc,
+            error: failFunc
+        });
+
+    }
+
+    var procCount = 0;
+    var procFiles = document.getElementById("processedFiles");
+    var totalFiles = document.getElementById("totalFiles");
+
+    function sendZipFile(data,dName) {
+        let actionUrl = '@Url.Action("ReceiveZipFile", "Repository")';
+        let inData = {
+            file: {
+                name: dName,
+                data: data,
+                type: '@MI3.Models.Repo.FileType.Dicom'
+            }
+        };
+
+        let successFunc = function (response) {
+            //increment complete files count, then if it is complete, do onComplete stuff
+            procCount++;
+            procFiles.innerText = procCount;
+            console.log(response);
+            if (response.result == 'Redirect')
+                window.location = response.url;
+        }
+        let failFunc = function (response) {
+            // alert('Failed to upload File ' + dName + '.');
+            document.body.innerHTML = response.responseText;
+            console.log(response);
+        }
+        return postWithAjax(inData, actionUrl, successFunc, failFunc);
+    }
+    //meta data for initialized the repository
+    
+    //sends metadata of what is int the zip file so it can be preconstructed
+    function sendZipMeta(data,fileCount) {
+        let actionUrl = '@Url.Action("ReceiveZipMeta", "Repository")';
+        //inData is of type UploadHeader
+        let inData = { zipMeta: {
+            files: data,
+            totalSize: 12,
+            totalFiles: fileCount
+        }
+    };
+        //start data sending
+        let successFunc = function (outData) {
+
+        };
+        let failFunc = function () {
+            alert('Failed to start upload process. Please reload page and try again.');
+        };
+        return postWithAjax(inData, actionUrl, successFunc, failFunc);
+
+    }
+    function postWithAjax(inData, actionUrl, successFunc, failFunc) {
+        var submitter = $("#submit");
+        console.log("Sending to :"+actionUrl);
+        console.log(inData);
+        return $.ajax({
+            type: "POST",
+            //__RequestVerificationToken: getAntiForgeryToken(submitter),
+            url: actionUrl,
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(inData),
+            dataType: "json",
+            success: successFunc,
+            error: failFunc
+        });
+
+    }
+
+
+    function getAntiForgeryToken () {
+        var token = '@Html.AntiForgeryToken()';
+        token = $(token).val();
+        return token;
+    };
+</script>
+

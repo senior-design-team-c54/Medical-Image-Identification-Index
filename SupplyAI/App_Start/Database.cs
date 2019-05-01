@@ -16,18 +16,25 @@ namespace MI3
     //Class used for accessing MongoDB database w/ methods ofr easy & convenienct loading/storing
     public class Database
     {
+        public static Database DB { get {
+                if (_database == null) _database = new Database();
+                return _database;
+            } set { _database = value; }
+        }
+        private static Database _database = null;
+
+
         public const string AppName = "MI3";
         // private static readonly string localconnect = "mongodb://localhost:27017";
         public static readonly string DefaultDatabase = "MI3";
         public static readonly string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-        public MongoClient client { get; private set; }
-        public IMongoDatabase DefaultDB { get { return (new MongoClient(connectionString)).GetDatabase((new MongoUrl(connectionString)).DatabaseName); } }
+        public MongoClient client { get; private set; } = new MongoClient(connectionString);
+        public IMongoDatabase DefaultDB { get { return ((MongoDatabaseBase)client.GetDatabase(DefaultDatabase)); } }
         public IMongoCollection<Repository> DataCollection { get { return DefaultDB.GetCollection<Repository>("Repository"); } }
 
 
         public Database() {
-            var path = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-            
+            var path = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;          
             client = new MongoClient(path);
         }
         

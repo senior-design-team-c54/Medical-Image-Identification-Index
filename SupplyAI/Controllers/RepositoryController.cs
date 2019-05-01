@@ -22,7 +22,7 @@ namespace MI3.Controllers
         [Route("View/{id}")]
         public ActionResult View(string id)
         {
-            var collection = Startup.Database.DataCollection;
+            var collection = Database.DB.DataCollection;
             var doc = collection.Find(x => x.ID == id).FirstOrDefault();
             if(doc == default(Repository)) {
                 return RedirectToAction("Index", "Search");
@@ -103,7 +103,7 @@ namespace MI3.Controllers
             //if last file
             if(count == ((Repository)HttpContext.Session["Repository"]).TotalFiles) {
                 //store repository now that ti is finished being initialized, hten erase it from session context (to save memory)
-                Startup.Database.AddRepository(((Repository)HttpContext.Session["Repository"]));
+                Database.DB.AddRepository(((Repository)HttpContext.Session["Repository"]));
                 HttpContext.Session["Repository"] = null;
                 //go back to search to show it completed
                 HttpContext.Session["RepoCount"] = 0;

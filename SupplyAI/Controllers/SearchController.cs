@@ -17,7 +17,7 @@ namespace MI3.Controllers
         //Where database refrerences would be stored.
         //Since we aren't connecting to a database, we create our own termoprary one to make things look cool
         //Where we will initialize our database stuff
-        private Database Database => Startup.Database; //alias the name for convenience
+        private Database Database => Database.DB; //alias the name for convenience
 
         public List<Repository> SearchResults;
         public int hi = 0;
