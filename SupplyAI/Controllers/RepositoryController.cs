@@ -24,9 +24,13 @@ namespace MI3.Controllers
         public ActionResult View(string id)
         {
             var collection = Database.DB.DataCollection;
-            var doc = collection.Find(x => x.ID == id).FirstOrDefault();
+            ObjectId ID;
+            bool canParse = ObjectId.TryParse(id, out ID);
+            Repository doc = null;
+            if(canParse)
+                doc = collection.Find(x => x.ID == id).FirstOrDefault();
             if(doc == default(Repository)) {
-                return RedirectToAction("Index", "Search");
+                return RedirectToAction("Index", "Search",new {query="" });
             }
 
             return View("View", doc);
@@ -35,11 +39,6 @@ namespace MI3.Controllers
             return View();
         }
 
-        [HttpGet]
-        public ActionResult Upload()
-        {
-            return View();
-        }
 
         [HttpGet]
         public ActionResult UploadDataSet() {
@@ -107,7 +106,7 @@ namespace MI3.Controllers
             HttpContext.Session["RepoCount"] = count;
 
             //if last file
-            if(count == ((Repository)HttpContext.Session["Repository"]).TotalFiles) {
+            if(count == ((Repository)HttpContext.Session["Repository"]).TotalFiles && count != 0) {
                 //store repository now that ti is finished being initialized, hten erase it from session context (to save memory)
                 Database.DB.AddRepository(((Repository)HttpContext.Session["Repository"]));
                 

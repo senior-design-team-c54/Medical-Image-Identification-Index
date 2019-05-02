@@ -10,29 +10,17 @@ using MI3.Controllers;
 namespace SupplyAI.Tests.Controllers
 {
     [TestClass]
-    public class HomeControllerTest
+    public class SearchControllerTest
     {
         [TestMethod]
         public void Index() {
             // Arrange
             SearchController controller = new SearchController();
             // Act
-            ViewResult result = controller.About() as ViewResult;
+            ViewResult result = controller.Index("") as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);
-        }
-
-        [TestMethod]
-        public void Search() {
-            // Arrange
-            SearchController controller = new SearchController();
-
-            // Act
-            ViewResult result = controller.ed as ViewResult;
-
-            // Assert
-            Assert.AreEqual("Your application description page.", result.ViewBag.Message);
         }
 
         
