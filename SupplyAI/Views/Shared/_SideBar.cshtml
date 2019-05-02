@@ -59,7 +59,7 @@
             if (!User.IsInRole("admin"))
             {
                 <p>@Html.ActionLink("Upload Dataset", "Index", "Upload")</p>
-                <p>@Html.ActionLink("My Datasets", "Index", "Search")</p>
+                <p>@Html.ActionLink("My Datasets", "Index", "MyDatasets")</p>
                 count = db.Count<Notification>(Notification.MongoCollectionName, notif => notif.ForUserType == "user" && notif.UserName != User.Identity.GetUserName() && notif.Resolved == false);
             }
             else

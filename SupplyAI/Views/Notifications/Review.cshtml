@@ -26,7 +26,7 @@
         </tr>
         <tr>
             <th><em>Date submitted</em></th>
-            <th>@ViewBag.viewModel.DateGenerated.ToLongDateString()</th>
+            <th>@ViewBag.viewModel.DateGenerated.ToLocalTime().ToLongDateString()</th>
         </tr>
         <tr>
             <th><em>Time submitted</em></th>

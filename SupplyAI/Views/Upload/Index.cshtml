@@ -9,7 +9,7 @@
 
 <p>
     <h2>Upload.</h2>
-    <h4>Submit a DICOM image dataset</h4>
+    <h4>Submit a DICOM image dataset.</h4>
     <hr />
 </p>
 
@@ -60,7 +60,7 @@
         } else {
             @Html.Partial("_UploadInstructions")
             <p>
-                Before proceeding, read the following list of terms of conditions carefully:
+                Read the following list of terms of conditions carefully:
             </p>
             @Html.Partial("_TermsConditions")
         }
@@ -68,7 +68,7 @@
 } else {
     @Html.Partial("_UploadInstructions")
     <p>
-        Please @Html.ActionLink("sign in", "Login", "Account") or @Html.ActionLink("register", "Register", "Account") to begin the upload process.
+        Please @Html.ActionLink("sign in", "Login", "Account") or @Html.ActionLink("register", "Register", "Account") to continue.
     </p>
 }
 

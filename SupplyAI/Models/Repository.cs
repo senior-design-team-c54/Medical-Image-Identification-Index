@@ -60,7 +60,6 @@ namespace MI3.Models
             ID = ObjectId.GenerateNewId().ToString();
             data.DatasetId = ID;
             data.UpdateInDb();
-
         }
 
         public void initializeFromZipMeta(UploadZipMeta zipMeta) {
