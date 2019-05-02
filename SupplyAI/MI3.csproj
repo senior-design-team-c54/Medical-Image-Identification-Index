@@ -409,6 +409,7 @@
     <Content Include="Views\Upload\_UploadInstructions.cshtml" />
     <Content Include="Views\Repository\UploadDataSet.cshtml" />
     <Content Include="Views\Upload\_UploadData.cshtml" />
+    <Content Include="Views\Repository\_RepoItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

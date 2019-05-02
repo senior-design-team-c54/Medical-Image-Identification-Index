@@ -1,0 +1,23 @@
+﻿@model dynamic
+<style>
+    .fullrow {
+        height: auto;
+        width: 100%;
+        display: flex;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+</style>
+@{
+    string style = "";
+
+    if (Model.isEven) { style = "background-color:#F8F8F8"; } else { style = ""; }
+    <div class="row fullrow" style=@style>
+        <b id="abstract_name" class="col-sm name_part">
+            @Model.Name
+        </b>
+        <div id="abstract_desc" class="col-sm" style="text-wrap:normal;overflow-wrap:break-word;overflow:hidden;box-sizing:content-box;">
+            @Model.Value
+        </div>
+    </div>
+}

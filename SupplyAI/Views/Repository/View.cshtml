@@ -14,14 +14,7 @@
         margin: 0px;
     }
 
-    .fullrow {
-        height: auto;
-        width: 100%;
-        display: flex;
-        
-        border-radius: 4px;
-        overflow:hidden;
-    }
+    
 
     .collection {
         margin: 8px;
@@ -34,9 +27,6 @@
         
     }
 
-    .collectionX:hover {
-        border-color: #DDD;
-    }
 
     .ml-0 {
         margin-left: 0px;
@@ -48,6 +38,7 @@
         min-width:120px;
         height:20px;
     }
+    
 </style>
 @model MI3.Models.Repository
 
@@ -62,42 +53,27 @@
             </h1>
             <div class="col-sm-3 container">
                 @{
-                    int i =0;
-                    string style="";
-                    foreach (var prop in typeof(MI3.Models.Repository).GetProperties()) {
-                        if (i++ % 2 == 0) { style = "background-color:#F8F8F8"; } else { style = ""; }
-                        <div class="row fullrow" style=@style>
-                            <b id="abstract_name" class="col-sm name_part">
-                                @prop.Name.Replace('_',' '):
-                            </b>
-                            <div id="abstract_desc" class="col-sm" style="text-wrap:normal;overflow-wrap:break-word;overflow:hidden;box-sizing:content-box;">
-                                @{ var obj = prop.GetValue(Model);
-                                    string output;
-                                    if (obj == null) { output = "[EMPTY]"; } else { output = obj.ToString(); }
-                                }
-                                @output
-                            </div>
-                        </div>
+                    int i = 0;
+                    @Html.Partial("_RepoItem", new { Name = "Source", isEven = (i++ % 2 == 0), Value = Model.MetaData.Source })
+                    @Html.Partial("_RepoItem", new { Name = "Url", isEven = (i++ % 2 == 0), Value = Model.Url })
+                    @Html.Partial("_RepoItem", new { Name = "Authors", isEven = (i++ % 2 == 0), Value = Model.Authors })
+                    @Html.Partial("_RepoItem", new { Name = "Upload Date", isEven = (i++ % 2 == 0), Value = Model.MetaData.DateGenerated })
+                    @Html.Partial("_RepoItem", new { Name = "UID", isEven = (i++ % 2 == 0), Value = Model.ID })
+                    @Html.Partial("_RepoItem", new { Name = "Public Access", isEven = (i++ % 2 == 0), Value = Model.MetaData.PublicAccess })
+                    @Html.Partial("_RepoItem", new { Name = "Has Labels", isEven = (i++ % 2 == 0), Value = Model.MetaData.HasLabels })
+                    if (Model.MetaData.HasLabels) {
+                        @Html.Partial("_RepoItem", new { Name = "Label Format", isEven = (i++ % 2 == 0), Value = Model.MetaData.LabelFormat })
                     }
+                    @Html.Partial("_RepoItem", new { Name = "Modality", isEven = (i++ % 2 == 0), Value = Model.MetaData.Modality })
+
+                    @Html.Partial("_RepoItem", new { Name = "Summary", isEven = (i++ % 2 == 0), Value = Model.Summary })
+
+
 
                 }
 
-                @*<div class="row fullrow">
-                    <b id="abstract_name" class="col-sm-2 name_part">
-                        Abstract:
-                    </b>
-                    <div id="abstract_desc" class="col-sm-10">
-                        The Abstract of this paper is something so scary that merely reading it would cause lesser men to go insane.  Even those who keep their sanity after viewing ...
-                    </div>
-                </div>
-                <div class="row fullrow">
-                    <b id="" class="col-sm name_part">
-                        Name:
-                    </b>
-                    <div id="" class="col-sm">
-                        Cancer Test
-                    </div>
-                </div>*@
+
+
 
             </div>
 
