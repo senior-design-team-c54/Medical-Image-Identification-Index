@@ -21,7 +21,8 @@ namespace SupplyAI.Tests.Controllers
             ViewResult result = controller.View(null) as ViewResult;
 
             // Assert
-            Assert.IsNotNull(result);
+            Assert.IsNull(result); //should fail
+            // Assert.IsNotNull(result);
         }
 
         [TestMethod]

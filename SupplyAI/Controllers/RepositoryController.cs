@@ -21,7 +21,7 @@ namespace MI3.Controllers
 
         // GET: View/0
         [Route("View/{id}")]
-        public ActionResult View(string id)
+        public new ActionResult View(string id)
         {
             var collection = Database.DB.DataCollection;
             ObjectId ID;
