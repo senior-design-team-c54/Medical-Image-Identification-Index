@@ -103,28 +103,8 @@ namespace MI3.Controllers
             return View("Index",this);
         }
 
-        // POST: Repository/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
+       
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Repository/Upload
-        [HttpGet]
-        public ActionResult Upload()
-        {
-            return View();
-        }
 
         
     }
