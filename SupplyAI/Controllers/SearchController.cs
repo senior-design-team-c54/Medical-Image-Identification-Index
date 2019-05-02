@@ -56,7 +56,8 @@ namespace MI3.Controllers
 
             // r.DicomFiles.Any(d => d.Dataset.Contains(parsedTag)); //look for tag (false if tag == null)
             SearchResults = Database.FindRepo(filter);
-            ViewBag.Title = SearchResults.Count + " Search Results";
+            // ViewBag.NumberOfResults = SearchResults.Count;
+            ViewBag.Title = "Search.";
             return View(SearchResults);
             //SearchResults = (from r in Database.DataCollection.AsQueryable() where
             //                r.Summary.Contains(query)

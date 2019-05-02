@@ -16,7 +16,8 @@ namespace MI3.Controllers
         {
             Database db = new Database();
             List<Repository> usersDatasets = db.FindRepo(doc => doc.MetaData.UserName == User.Identity.GetUserName());
-            return View(usersDatasets);
+            ViewBag.Title = "My Datasets.";
+            return View("~/Views/Search/Index.cshtml", usersDatasets);
         }
     }
 }

@@ -1,9 +1,8 @@
-﻿@{
-    ViewBag.Title = "MI3";
-}
-
-<h2>Search.</h2>
+﻿
+<h2>@ViewBag.Title</h2>
 <hr />
+
+@*<h4><em>@ViewBag.NumberOfResults search results.</em></h4>*@
 
 <style>
     .collection {
@@ -51,7 +50,6 @@
     }
 
         .tag:hover {
-
             text-decoration: none;
             background-color: #aee1ff;
             color: #1b1b1b;
@@ -65,8 +63,9 @@
 
 @{
     string alternate = "";
-    
-    foreach (var data in Model) {
+
+    foreach (var data in Model)
+    {
         if (alternate == "even") { alternate = "odd"; } else { alternate = "even"; }
         <div class="collection row container">
             <!--
@@ -77,11 +76,12 @@
                 <div class="row">
                     @{
                         string name = data.Name;
-                        if (name == null || name == "") {
+                        if (name == null || name == "")
+                        {
                             name = "NO NAME FOUND";
                         }
-                    @Html.ActionLink(name, "View", "Repository", new { id = data.ID }, new { @class = "title" })
-                        }
+                        @Html.ActionLink(name, "View", "Repository", new { id = data.ID }, new { @class = "title" })
+                    }
                 </div>
                 <div class="row">
                     Authors: @data.Authors
@@ -91,7 +91,8 @@
                 </div>
                 <div class="row" style="padding-top:5px;">
                     @{
-                        foreach (var t in data.Tags) {
+                        foreach (var t in data.Tags)
+                        {
                             @Html.ActionLink(t.Key, "Tag", new { name = t.Key }, new { @class = "tag col-m-1" })
 
                         }
